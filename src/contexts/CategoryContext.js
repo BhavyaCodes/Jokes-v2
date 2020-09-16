@@ -12,7 +12,21 @@ export function CategoryProvider(props) {
   });
 
   const changeCategories = (e) => {
-    console.log(e.target.name);
+    if (e.target.name !== "all") {
+      setCategories({
+        ...categories,
+        [e.target.name]: !categories[e.target.name],
+        all: false,
+      });
+    } else if (e.target.name === "all") {
+      setCategories({
+        all: true,
+        programming: false,
+        miscellaneous: false,
+        dark: false,
+        pun: false,
+      });
+    }
   };
   return (
     <CategoryContext.Provider value={{ categories, changeCategories }}>
