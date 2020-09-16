@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -19,6 +19,8 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormGroup from "@material-ui/core/FormGroup";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+
+import { CategoryContext } from "../contexts/CategoryContext";
 
 const drawerWidth = 240;
 
@@ -69,6 +71,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ResponsiveDrawer(props) {
+  const { categories, changeCategories } = useContext(CategoryContext);
+  console.log(categories);
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -114,7 +118,7 @@ function ResponsiveDrawer(props) {
             control={
               <Checkbox
                 // checked={state.checkedB}
-                // onChange={handleChange}
+                onChange={changeCategories}
                 name="programming"
                 color="primary"
               />

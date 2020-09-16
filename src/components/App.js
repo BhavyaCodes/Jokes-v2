@@ -1,12 +1,13 @@
 import React from "react";
 
+import { CategoryProvider } from "../contexts/CategoryContext";
 import Drawer from "./Drawer";
 
 function App() {
   return (
-    <div className="App">
+    <CategoryProvider>
       <Drawer />
-    </div>
+    </CategoryProvider>
   );
 }
 
