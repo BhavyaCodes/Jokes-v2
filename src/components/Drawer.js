@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Divider from "@material-ui/core/Divider";
-import Drawer from "@material-ui/core/Drawer";
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
 import List from "@material-ui/core/List";
@@ -268,12 +268,13 @@ function ResponsiveDrawer(props) {
       <nav className={classes.drawer}>
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
-          <Drawer
+          <SwipeableDrawer
             container={container}
             variant="temporary"
             anchor={theme.direction === "rtl" ? "right" : "left"}
             open={mobileOpen}
             onClose={handleDrawerToggle}
+            onOpen={handleDrawerToggle}
             classes={{
               paper: classes.drawerPaper,
             }}
@@ -282,10 +283,10 @@ function ResponsiveDrawer(props) {
             }}
           >
             {drawer}
-          </Drawer>
+          </SwipeableDrawer>
         </Hidden>
         <Hidden xsDown implementation="css">
-          <Drawer
+          <SwipeableDrawer
             classes={{
               paper: classes.drawerPaper,
             }}
@@ -293,7 +294,7 @@ function ResponsiveDrawer(props) {
             open
           >
             {drawer}
-          </Drawer>
+          </SwipeableDrawer>
         </Hidden>
       </nav>
       <main className={classes.content}>
