@@ -19,6 +19,7 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import FormGroup from "@material-ui/core/FormGroup";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
+import Radio from "@material-ui/core/Radio";
 
 import { CategoryContext } from "../contexts/CategoryContext";
 
@@ -113,7 +114,16 @@ function ResponsiveDrawer(props) {
             <ListItemText primary={text} />
           </ListItem>
 				))*/}
+
         <FormGroup className={classes.formGroup}>
+          <FormControlLabel
+            value="all"
+            control={
+              <Radio color="primary" name="all" onChange={changeCategories} />
+            }
+            label="All"
+          />
+
           <FormControlLabel
             control={
               <Checkbox
