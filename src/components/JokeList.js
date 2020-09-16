@@ -24,7 +24,8 @@ const useStyles = makeStyles((theme) => ({
 
 function JokeList() {
   const classes = useStyles();
-  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+  // const [loading, setLoading] = useState(true);
   const [jokes, setJokes] = useState([]);
 
   const { flags } = useContext(BlacklistContext);
@@ -55,16 +56,21 @@ function JokeList() {
       flagString = flagString.slice(0, -1);
 
       try {
+        // console.log("tryblock");
         const response = await jokesApi.get(`/${categoryString}?amount=6`, {
           params: {
             blacklistFlags: flagString || undefined,
             contains: term || undefined,
           },
         });
-        if (!response.data.error) {
+        if (response.data.error) {
+          setError(true);
+        } else {
           setJokes(response.data.jokes);
+          setError(false);
         }
       } catch (error) {
+        setError(true);
         console.log(error);
       }
     };
@@ -72,17 +78,21 @@ function JokeList() {
   }, [flags, categories, term]);
   return (
     <div className={classes.root}>
-      <Grid container spacing={3}>
-        {jokes.map((joke) => (
-          <Grid item sm={12} md={6} className={classes.gridItem}>
-            {joke.type === "single" ? (
-              <SingleJoke joke={joke} />
-            ) : (
-              <TwoPartJoke joke={joke} />
-            )}
-          </Grid>
-        ))}
-      </Grid>
+      {jokes && !error ? (
+        <Grid container spacing={3}>
+          {jokes.map((joke) => (
+            <Grid item sm={12} md={6} className={classes.gridItem}>
+              {joke.type === "single" ? (
+                <SingleJoke joke={joke} />
+              ) : (
+                <TwoPartJoke joke={joke} />
+              )}
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <h2>No jokes found!! try updating your filters</h2>
+      )}
     </div>
   );
 }
