@@ -15,6 +15,9 @@ import MailIcon from "@material-ui/icons/Mail";
 import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormGroup from "@material-ui/core/FormGroup";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 
 const drawerWidth = 240;
@@ -57,6 +60,12 @@ const useStyles = makeStyles((theme) => ({
   filterText: {
     paddingLeft: theme.spacing(2),
   },
+  subHeading: {
+    padding: theme.spacing(2),
+  },
+  formGroup: {
+    margin: theme.spacing(2),
+  },
 }));
 
 function ResponsiveDrawer(props) {
@@ -72,11 +81,14 @@ function ResponsiveDrawer(props) {
   const drawer = (
     <div>
       <div className={classes.toolbar}>
-        <Typography className={classes.filterText} variant="h5">
+        <Typography className={classes.filterText} variant="h4">
           Filters
         </Typography>
       </div>
       <Divider />
+      <Typography className={classes.subHeading} variant="h6">
+        Categories
+      </Typography>
       <List>
         {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
           <ListItem button key={text}>
@@ -89,14 +101,38 @@ function ResponsiveDrawer(props) {
       </List>
       <Divider />
       <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
+        {/*["All mail", "Trash", "Spam"].map((text, index) => (
           <ListItem button key={text}>
             <ListItemIcon>
               {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
             </ListItemIcon>
             <ListItemText primary={text} />
           </ListItem>
-        ))}
+				))*/}
+        <FormGroup className={classes.formGroup}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                // checked={state.checkedB}
+                // onChange={handleChange}
+                name="programming"
+                color="primary"
+              />
+            }
+            label="Programming"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                // checked={state.checkedB}
+                // onChange={handleChange}
+                name="miscellaneous"
+                color="primary"
+              />
+            }
+            label="Miscellaneous"
+          />
+        </FormGroup>
       </List>
     </div>
   );
