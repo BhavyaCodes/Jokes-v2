@@ -8,15 +8,32 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(0),
     marginRight: theme.spacing(1),
   },
+  Programming: {
+    backgroundColor: "blue",
+  },
 }));
 
-function Chips() {
+function Chips({ category, flags }) {
   const classes = useStyles();
   // const theme = useTheme();
   return (
     <div className={classes.root}>
-      <Chip className={classes.chip} size="small" label="Basic" />
-      <Chip className={classes.chip} size="small" label="Basic" />
+      <Chip
+        className={`${classes[`${category}`]} ${classes.chip}`}
+        size="small"
+        label={category}
+      />
+      {Object.keys(flags).map((key) => (
+        <>
+          {flags[key] ? (
+            <Chip
+              className={`${classes[`${key}`]} ${classes.chip} `}
+              size="small"
+              label={key.toString()}
+            />
+          ) : null}
+        </>
+      ))}
     </div>
   );
 }
