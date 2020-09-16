@@ -1,14 +1,32 @@
 import React, { useState, useContext, useEffect } from "react";
 
+import Grid from "@material-ui/core/Grid";
+import { makeStyles } from "@material-ui/core/styles";
+
 import { CategoryContext } from "../contexts/CategoryContext";
 import { BlacklistContext } from "../contexts/BlacklistContext";
+import { SearchContext } from "../contexts/SearchContext";
+
 import jokesApi from "../api/jokesApi";
 
+import SingleJoke from "./SingleJoke";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: "pink",
+    padding: theme.spacing(2),
+  },
+}));
+
 function JokeList() {
+  const classes = useStyles();
   const [loading, setLoading] = useState(true);
-  const [jokes, setJokes] = useState({});
+  const [jokes, setJokes] = useState([]);
+
   const { flags } = useContext(BlacklistContext);
   const { categories } = useContext(CategoryContext);
+  const { term } = useContext(SearchContext);
 
   useEffect(() => {
     const getJokes = async () => {
@@ -37,17 +55,29 @@ function JokeList() {
         const response = await jokesApi.get(`/${categoryString}?amount=6`, {
           params: {
             blacklistFlags: flagString || undefined,
-            // contains: search || undefined,
+            contains: term || undefined,
           },
         });
-        console.log(response);
+        if (!response.data.error) {
+          setJokes(response.data.jokes);
+        }
       } catch (error) {
         console.log(error);
       }
     };
     getJokes();
-  }, [flags, categories]);
-  return <div>{loading ? "loading..." : "Jokes"}</div>;
+  }, [flags, categories, term]);
+  return (
+    <div className={classes.root}>
+      <Grid container spacing={3}>
+        {jokes.map((joke) => (
+          <Grid item xs={12} sm={6}>
+            <SingleJoke joke={joke} />
+          </Grid>
+        ))}
+      </Grid>
+    </div>
+  );
 }
 
 export default JokeList;
