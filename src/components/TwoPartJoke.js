@@ -10,6 +10,9 @@ const useStyles = makeStyles({
   root: {
     minWidth: 275,
     height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
   title: {
     fontSize: 14,

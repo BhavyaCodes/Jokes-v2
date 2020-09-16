@@ -10,6 +10,9 @@ const useStyles = makeStyles({
   root: {
     minWidth: 275,
     height: "100%",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
   },
   title: {
     fontSize: 14,
@@ -19,19 +22,14 @@ const useStyles = makeStyles({
   },
 });
 
-function SingleJoke(props) {
+function SingleJoke({ joke }) {
   const classes = useStyles();
 
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
         <Typography variant="h5" component="h2">
-          Single Line
-        </Typography>
-        <Typography variant="body2" component="p">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
+          {joke.joke}
         </Typography>
       </CardContent>
       <CardActions>
