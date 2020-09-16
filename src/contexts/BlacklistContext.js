@@ -10,9 +10,15 @@ export function BlacklistProvider(props) {
     racist: false,
     sexist: false,
   });
+  const changeFlags = (e) => {
+    setFlags({
+      ...flags,
+      [e.target.name]: !flags[e.target.name],
+    });
+  };
 
   return (
-    <BlacklistContext.Provider value={{ flags }}>
+    <BlacklistContext.Provider value={{ flags, changeFlags }}>
       {props.children}
     </BlacklistContext.Provider>
   );

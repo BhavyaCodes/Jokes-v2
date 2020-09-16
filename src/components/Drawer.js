@@ -6,12 +6,7 @@ import Divider from "@material-ui/core/Divider";
 import Drawer from "@material-ui/core/Drawer";
 import Hidden from "@material-ui/core/Hidden";
 import IconButton from "@material-ui/core/IconButton";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
 import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import MailIcon from "@material-ui/icons/Mail";
 import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
@@ -65,17 +60,17 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: theme.spacing(2),
   },
   subHeading: {
-    padding: theme.spacing(2),
+    paddingLeft: theme.spacing(2),
+    paddingTop: theme.spacing(1),
   },
   formGroup: {
-    margin: theme.spacing(2),
+    marginLeft: theme.spacing(2),
   },
 }));
 
 function ResponsiveDrawer(props) {
   const { categories, changeCategories } = useContext(CategoryContext);
-  const { flags } = useContext(BlacklistContext);
-  console.log(flags);
+  const { flags, changeFlags } = useContext(BlacklistContext);
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -97,17 +92,6 @@ function ResponsiveDrawer(props) {
         Categories
       </Typography>
       <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
         <FormGroup className={classes.formGroup}>
           <FormControlLabel
             value="all"
@@ -121,11 +105,9 @@ function ResponsiveDrawer(props) {
             }
             label="All"
           />
-
           <FormControlLabel
             control={
               <Checkbox
-                // checked={state.checkedB}
                 checked={categories.programming}
                 onChange={changeCategories}
                 name="programming"
@@ -169,6 +151,70 @@ function ResponsiveDrawer(props) {
           />
         </FormGroup>
       </List>
+      <Divider />
+      <Typography className={classes.subHeading} variant="h6">
+        Flags to blacklist
+      </Typography>
+      <List>
+        <FormGroup className={classes.formGroup}>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={flags.nsfw}
+                onChange={changeFlags}
+                name="nsfw"
+                color="primary"
+              />
+            }
+            label="NSFW"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={flags.religious}
+                onChange={changeFlags}
+                name="religious"
+                color="primary"
+              />
+            }
+            label="Religious"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={flags.political}
+                onChange={changeFlags}
+                name="political"
+                color="primary"
+              />
+            }
+            label="Political"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={flags.racist}
+                onChange={changeFlags}
+                name="racist"
+                color="primary"
+              />
+            }
+            label="Racist"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={flags.sexist}
+                onChange={changeFlags}
+                name="sexist"
+                color="primary"
+              />
+            }
+            label="Sexist"
+          />
+        </FormGroup>
+      </List>
+      <Divider />
     </div>
   );
 
