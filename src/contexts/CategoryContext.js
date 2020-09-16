@@ -28,8 +28,20 @@ export function CategoryProvider(props) {
       });
     }
   };
+
+  const resetCategories = () => {
+    setCategories({
+      all: true,
+      programming: false,
+      miscellaneous: false,
+      dark: false,
+      pun: false,
+    });
+  };
   return (
-    <CategoryContext.Provider value={{ categories, changeCategories }}>
+    <CategoryContext.Provider
+      value={{ categories, changeCategories, resetCategories }}
+    >
       {props.children}
     </CategoryContext.Provider>
   );

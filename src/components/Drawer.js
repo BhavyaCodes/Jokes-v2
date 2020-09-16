@@ -77,8 +77,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function ResponsiveDrawer(props) {
-  const { categories, changeCategories } = useContext(CategoryContext);
-  const { flags, changeFlags } = useContext(BlacklistContext);
+  const { categories, changeCategories, resetCategories } = useContext(
+    CategoryContext
+  );
+  const { flags, changeFlags, resetFlags } = useContext(BlacklistContext);
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -223,7 +225,15 @@ function ResponsiveDrawer(props) {
         </FormGroup>
       </List>
       <div className={classes.boxContainer}>
-        <Button variant="contained">Reset filters</Button>
+        <Button
+          variant="contained"
+          onClick={() => {
+            resetCategories();
+            resetFlags();
+          }}
+        >
+          Reset filters
+        </Button>
         <Button variant="contained" color="primary">
           Refresh
         </Button>
