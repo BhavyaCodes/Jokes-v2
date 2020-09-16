@@ -16,6 +16,8 @@ import FormGroup from "@material-ui/core/FormGroup";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Radio from "@material-ui/core/Radio";
 import Button from "@material-ui/core/Button";
+import InputBase from "@material-ui/core/InputBase";
+import SearchIcon from "@material-ui/icons/Search";
 
 import { CategoryContext } from "../contexts/CategoryContext";
 import { BlacklistContext } from "../contexts/BlacklistContext";
@@ -76,6 +78,31 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "row",
     justifyContent: "space-around",
   },
+  search: {
+    position: "relative",
+    margin: theme.spacing(1),
+  },
+  searchIcon: {
+    position: "absolute",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: "100%",
+    width: theme.spacing(5),
+    color: "black",
+    zIndex: 2,
+  },
+  inputRoot: {
+    width: "100%",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: theme.palette.grey[100],
+  },
+  inputInput: {
+    paddingTop: theme.spacing(1),
+    paddingRight: theme.spacing(1),
+    paddingButtom: theme.spacing(1),
+    paddingLeft: theme.spacing(6),
+  },
 }));
 
 function ResponsiveDrawer(props) {
@@ -100,6 +127,18 @@ function ResponsiveDrawer(props) {
         </Typography>
       </div>
       <Divider />
+      <div className={classes.search}>
+        <div className={classes.searchIcon}>
+          <SearchIcon />
+        </div>
+        <InputBase
+          placeholder="search..."
+          classes={{
+            root: classes.inputRoot,
+            input: classes.inputInput,
+          }}
+        />
+      </div>
       <Typography className={classes.subHeading} variant="h6">
         Categories
       </Typography>
