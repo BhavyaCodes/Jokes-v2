@@ -22,6 +22,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Radio from "@material-ui/core/Radio";
 
 import { CategoryContext } from "../contexts/CategoryContext";
+import { BlacklistContext } from "../contexts/BlacklistContext";
 
 const drawerWidth = 240;
 
@@ -73,6 +74,8 @@ const useStyles = makeStyles((theme) => ({
 
 function ResponsiveDrawer(props) {
   const { categories, changeCategories } = useContext(CategoryContext);
+  const { flags } = useContext(BlacklistContext);
+  console.log(flags);
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
