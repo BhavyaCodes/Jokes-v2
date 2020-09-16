@@ -21,6 +21,7 @@ import SearchIcon from "@material-ui/icons/Search";
 
 import { CategoryContext } from "../contexts/CategoryContext";
 import { BlacklistContext } from "../contexts/BlacklistContext";
+import { SearchContext } from "../contexts/SearchContext";
 
 import JokeList from "./JokeList";
 
@@ -110,6 +111,7 @@ function ResponsiveDrawer(props) {
     CategoryContext
   );
   const { flags, changeFlags, resetFlags } = useContext(BlacklistContext);
+  const { term, handleInput } = useContext(SearchContext);
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -132,6 +134,8 @@ function ResponsiveDrawer(props) {
           <SearchIcon />
         </div>
         <InputBase
+          onChange={handleInput}
+          value={term}
           placeholder="search..."
           classes={{
             root: classes.inputRoot,
