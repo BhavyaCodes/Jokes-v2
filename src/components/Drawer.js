@@ -106,20 +106,16 @@ function ResponsiveDrawer(props) {
       </List>
       <Divider />
       <List>
-        {/*["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-				))*/}
-
         <FormGroup className={classes.formGroup}>
           <FormControlLabel
             value="all"
             control={
-              <Radio color="primary" name="all" onChange={changeCategories} />
+              <Radio
+                color="primary"
+                checked={categories.all}
+                name="all"
+                onChange={changeCategories}
+              />
             }
             label="All"
           />
@@ -128,6 +124,7 @@ function ResponsiveDrawer(props) {
             control={
               <Checkbox
                 // checked={state.checkedB}
+                checked={categories.programming}
                 onChange={changeCategories}
                 name="programming"
                 color="primary"
@@ -138,13 +135,35 @@ function ResponsiveDrawer(props) {
           <FormControlLabel
             control={
               <Checkbox
-                // checked={state.checkedB}
-                // onChange={handleChange}
+                checked={categories.miscellaneous}
+                onChange={changeCategories}
                 name="miscellaneous"
                 color="primary"
               />
             }
             label="Miscellaneous"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={categories.dark}
+                onChange={changeCategories}
+                name="dark"
+                color="primary"
+              />
+            }
+            label="Dark"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={categories.pun}
+                onChange={changeCategories}
+                name="pun"
+                color="primary"
+              />
+            }
+            label="Pun"
           />
         </FormGroup>
       </List>
