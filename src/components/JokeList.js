@@ -10,12 +10,16 @@ import { SearchContext } from "../contexts/SearchContext";
 import jokesApi from "../api/jokesApi";
 
 import SingleJoke from "./SingleJoke";
+import TwoPartJoke from "./TwoPartJoke";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     backgroundColor: "pink",
     padding: theme.spacing(2),
+  },
+  gridItem: {
+    width: "100%",
   },
 }));
 
@@ -71,8 +75,12 @@ function JokeList() {
     <div className={classes.root}>
       <Grid container spacing={3}>
         {jokes.map((joke) => (
-          <Grid item xs={12} sm={6}>
-            <SingleJoke joke={joke} />
+          <Grid item sm={12} md={6} className={classes.gridItem}>
+            {joke.type === "single" ? (
+              <SingleJoke joke={joke} />
+            ) : (
+              <TwoPartJoke joke={joke} />
+            )}
           </Grid>
         ))}
       </Grid>

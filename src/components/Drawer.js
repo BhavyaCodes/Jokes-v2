@@ -314,7 +314,7 @@ function ResponsiveDrawer(props) {
           <SwipeableDrawer
             container={container}
             variant="temporary"
-            anchor={theme.direction === "rtl" ? "right" : "left"}
+            anchor="left"
             open={mobileOpen}
             onClose={handleDrawerToggle}
             onOpen={handleDrawerToggle}

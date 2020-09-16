@@ -9,11 +9,7 @@ import Typography from "@material-ui/core/Typography";
 const useStyles = makeStyles({
   root: {
     minWidth: 275,
-  },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)",
+    height: "100%",
   },
   title: {
     fontSize: 14,
@@ -30,7 +26,7 @@ function SingleJoke(props) {
     <Card className={classes.root} variant="outlined">
       <CardContent>
         <Typography variant="h5" component="h2">
-          blah blah
+          Single Line
         </Typography>
         <Typography variant="body2" component="p">
           well meaning and kindly.
