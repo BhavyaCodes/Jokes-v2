@@ -20,6 +20,8 @@ import Button from "@material-ui/core/Button";
 import { CategoryContext } from "../contexts/CategoryContext";
 import { BlacklistContext } from "../contexts/BlacklistContext";
 
+import JokeList from "./JokeList";
+
 const drawerWidth = 300;
 
 const useStyles = makeStyles((theme) => ({
@@ -263,7 +265,7 @@ function ResponsiveDrawer(props) {
           </Typography>
         </Toolbar>
       </AppBar>
-      <nav className={classes.drawer} aria-label="mailbox folders">
+      <nav className={classes.drawer}>
         {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="css">
           <Drawer
@@ -296,6 +298,7 @@ function ResponsiveDrawer(props) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
+        <JokeList />
       </main>
     </div>
   );
