@@ -15,11 +15,12 @@ import Checkbox from "@material-ui/core/Checkbox";
 import FormGroup from "@material-ui/core/FormGroup";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Radio from "@material-ui/core/Radio";
+import Button from "@material-ui/core/Button";
 
 import { CategoryContext } from "../contexts/CategoryContext";
 import { BlacklistContext } from "../contexts/BlacklistContext";
 
-const drawerWidth = 240;
+const drawerWidth = 300;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -65,6 +66,13 @@ const useStyles = makeStyles((theme) => ({
   },
   formGroup: {
     marginLeft: theme.spacing(2),
+  },
+  boxContainer: {
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
 }));
 
@@ -214,7 +222,12 @@ function ResponsiveDrawer(props) {
           />
         </FormGroup>
       </List>
-      <Divider />
+      <div className={classes.boxContainer}>
+        <Button variant="contained">Reset filters</Button>
+        <Button variant="contained" color="primary">
+          Refresh
+        </Button>
+      </div>
     </div>
   );
 
