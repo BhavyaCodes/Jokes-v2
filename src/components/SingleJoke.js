@@ -5,11 +5,10 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import Chip from "@material-ui/core/Chip";
 
 import Chips from "./Chips";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     minWidth: 275,
     height: "100%",
@@ -23,7 +22,11 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
-});
+  chipContainer: {
+    paddingTop: theme.spacing(0),
+    paddingBottom: theme.spacing(0),
+  },
+}));
 
 function SingleJoke({ joke }) {
   const classes = useStyles();
@@ -35,9 +38,14 @@ function SingleJoke({ joke }) {
           {joke.joke}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions>
+      <div className={classes.footer}>
+        <CardContent className={classes.chipContainer}>
+          <Chips category={joke.category} flags={joke.flags} />
+        </CardContent>
+        <CardActions>
+          <Button size="small">Learn More</Button>
+        </CardActions>
+      </div>
     </Card>
   );
 }

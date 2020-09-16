@@ -61,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
+    backgroundColor: theme.palette.grey[200],
   },
   filterText: {
     paddingLeft: theme.spacing(2),

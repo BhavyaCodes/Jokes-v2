@@ -15,7 +15,6 @@ import TwoPartJoke from "./TwoPartJoke";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: "pink",
     padding: theme.spacing(2),
   },
   gridItem: {
