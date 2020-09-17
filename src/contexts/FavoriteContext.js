@@ -6,8 +6,12 @@ export const FavoriteContext = createContext();
 export function FavoriteProvider(props) {
   const [favorites, setFavorites] = useLocalStorageStage("favoriteId", []);
 
+  const addFavorites = (id) => {
+    setFavorites([...favorites, id]);
+  };
+
   return (
-    <FavoriteContext.Provider value={{ favorites, setFavorites }}>
+    <FavoriteContext.Provider value={{ favorites, setFavorites, addFavorites }}>
       {props.children}
     </FavoriteContext.Provider>
   );

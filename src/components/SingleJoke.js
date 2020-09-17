@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -12,6 +12,8 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 
 import Chips from "./Chips";
+
+import { FavoriteContext } from "../contexts/FavoriteContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -39,7 +41,17 @@ const useStyles = makeStyles((theme) => ({
 
 function SingleJoke({ joke }) {
   const classes = useStyles();
+  const { favorites, addFavorites } = useContext(FavoriteContext);
 
+  const checkFavorite = (id) => {
+    return favorites.includes(id);
+  };
+
+  const handleChange = (e) => {
+    if (e.target.checked) {
+      addFavorites(joke.id);
+    }
+  };
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
@@ -58,7 +70,9 @@ function SingleJoke({ joke }) {
               <Checkbox
                 icon={<FavoriteBorder />}
                 checkedIcon={<Favorite />}
+                checked={checkFavorite(joke.id)}
                 name="checkedH"
+                onChange={handleChange}
               />
             }
           />
