@@ -24,6 +24,7 @@ import RefreshIcon from "@material-ui/icons/Refresh";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import Tooltip from "@material-ui/core/Tooltip";
 
 import { CategoryContext } from "../contexts/CategoryContext";
 import { BlacklistContext } from "../contexts/BlacklistContext";
@@ -272,13 +273,15 @@ function Home(props) {
                 <ArrowBackIcon />
               </IconButton>
             ) : (
-              <IconButton
-                aria-label="view favorite jokes"
-                color="inherit"
-                onClick={() => props.history.push("/favorites")}
-              >
-                <FavoriteIcon />
-              </IconButton>
+              <Tooltip title="Favorites">
+                <IconButton
+                  aria-label="view favorite jokes"
+                  color="inherit"
+                  onClick={() => props.history.push("/favorites")}
+                >
+                  <FavoriteIcon />
+                </IconButton>
+              </Tooltip>
             )}
           </div>
         </Toolbar>
@@ -320,14 +323,16 @@ function Home(props) {
           <div className={classes.toolbar} />
           {location === "/favorites" ? <FavoriteJokeList /> : <JokeList />}
           {location === "/favorites" ? null : (
-            <Fab
-              color="secondary"
-              aria-label="refresh"
-              className={classes.refreshButton}
-              onClick={refresh}
-            >
-              <RefreshIcon />
-            </Fab>
+            <Tooltip title="Refresh Jokes">
+              <Fab
+                color="secondary"
+                aria-label="refresh"
+                className={classes.refreshButton}
+                onClick={refresh}
+              >
+                <RefreshIcon />
+              </Fab>
+            </Tooltip>
           )}
         </main>
         <Footer />

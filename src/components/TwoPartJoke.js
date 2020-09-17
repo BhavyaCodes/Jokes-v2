@@ -12,6 +12,7 @@ import Checkbox from "@material-ui/core/Checkbox";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import Snackbar from "@material-ui/core/Snackbar";
 import CloseIcon from "@material-ui/icons/Close";
+import Tooltip from "@material-ui/core/Tooltip";
 
 import Chips from "./Chips";
 
@@ -62,21 +63,25 @@ function SingleJoke({ joke }) {
           <Chips category={joke.category} flags={joke.flags} />
         </CardContent>
         <CardActions disableSpacing className={classes.CardActions}>
-          <FormControlLabel
-            className={classes.favorite}
-            control={
-              <Checkbox
-                icon={<FavoriteBorder />}
-                checkedIcon={<Favorite />}
-                checked={checkFavorite(joke.id)}
-                name="checkedH"
-                onChange={handleChange}
-              />
-            }
-          />
-          <IconButton aria-label="share">
-            <ShareIcon />
-          </IconButton>
+          <Tooltip title="Add to Favorites">
+            <FormControlLabel
+              className={classes.favorite}
+              control={
+                <Checkbox
+                  icon={<FavoriteBorder />}
+                  checkedIcon={<Favorite />}
+                  checked={checkFavorite(joke.id)}
+                  name="checkedH"
+                  onChange={handleChange}
+                />
+              }
+            />
+          </Tooltip>
+          <Tooltip title="Share">
+            <IconButton aria-label="share">
+              <ShareIcon />
+            </IconButton>
+          </Tooltip>
         </CardActions>
       </div>
       <Snackbar
