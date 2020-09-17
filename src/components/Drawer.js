@@ -20,6 +20,7 @@ import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
 import Fab from "@material-ui/core/Fab";
 import RefreshIcon from "@material-ui/icons/Refresh";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 
 import { CategoryContext } from "../contexts/CategoryContext";
 import { BlacklistContext } from "../contexts/BlacklistContext";
@@ -115,6 +116,10 @@ const useStyles = makeStyles((theme) => ({
   },
   resetButton: {
     width: "90%",
+  },
+  appBarIconsRight: {
+    margin: "auto",
+    marginRight: 0,
   },
 }));
 
@@ -323,6 +328,16 @@ function ResponsiveDrawer(props) {
           <Typography variant="h6" noWrap>
             Jokes
           </Typography>
+          <div className={classes.appBarIconsRight}>
+            <IconButton
+              // aria-label="account of current user"
+              // aria-controls="menu-appbar"
+              // onClick={handleMenu}
+              color="inherit"
+            >
+              <FavoriteIcon />
+            </IconButton>
+          </div>
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer}>
