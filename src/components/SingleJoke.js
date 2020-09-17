@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
@@ -10,6 +10,9 @@ import Favorite from "@material-ui/icons/Favorite";
 import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import Snackbar from "@material-ui/core/Snackbar";
+import CloseIcon from "@material-ui/icons/Close";
 
 import Chips from "./Chips";
 
@@ -37,9 +40,24 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: "12px",
     marginRight: 0,
   },
+  SnackbarMessage: {
+    display: "flex",
+  },
+  SnackbarText: {
+    margin: "auto",
+    marginLeft: theme.spacing(1),
+  },
 }));
 
 function SingleJoke({ joke }) {
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
+
   const classes = useStyles();
   const { favoritesId, addFavoriteJoke, removeFavoriteJoke } = useContext(
     FavoriteContext
@@ -51,6 +69,7 @@ function SingleJoke({ joke }) {
 
   const handleChange = (e) => {
     if (e.target.checked) {
+      setOpenSnackbar(true);
       addFavoriteJoke(joke);
     }
     if (e.target.checked === false) {
@@ -87,6 +106,33 @@ function SingleJoke({ joke }) {
           </IconButton>
         </CardActions>
       </div>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        open={openSnackbar}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message={
+          <div className={classes.SnackbarMessage}>
+            <FavoriteIcon color="secondary" />
+            <div className={classes.SnackbarText}>Added to favorites</div>
+          </div>
+        }
+        action={
+          <React.Fragment>
+            <IconButton
+              size="small"
+              aria-label="close"
+              color="inherit"
+              onClick={handleClose}
+            >
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </React.Fragment>
+        }
+      />
     </Card>
   );
 }
