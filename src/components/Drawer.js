@@ -25,6 +25,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import { CategoryContext } from "../contexts/CategoryContext";
 import { BlacklistContext } from "../contexts/BlacklistContext";
 import { SearchContext } from "../contexts/SearchContext";
+import { FavoriteContext } from "../contexts/FavoriteContext";
 
 import JokeList from "./JokeList";
 
@@ -131,6 +132,7 @@ function ResponsiveDrawer(props) {
     BlacklistContext
   );
   const { term, handleInput, resetTerm } = useContext(SearchContext);
+  const { favorites, setFavorites } = useContext(FavoriteContext);
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -143,6 +145,8 @@ function ResponsiveDrawer(props) {
   const refresh = () => {
     setFlags({ ...flags });
   };
+
+  console.log(favorites);
 
   const drawer = (
     <div>

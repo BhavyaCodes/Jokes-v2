@@ -3,6 +3,7 @@ import React from "react";
 import { CategoryProvider } from "../contexts/CategoryContext";
 import { BlacklistProvider } from "../contexts/BlacklistContext";
 import { SearchProvider } from "../contexts/SearchContext";
+import { FavoriteProvider } from "../contexts/FavoriteContext";
 import Drawer from "./Drawer";
 
 function App() {
@@ -10,7 +11,9 @@ function App() {
     <CategoryProvider>
       <BlacklistProvider>
         <SearchProvider>
-          <Drawer />
+          <FavoriteProvider>
+            <Drawer />
+          </FavoriteProvider>
         </SearchProvider>
       </BlacklistProvider>
     </CategoryProvider>
