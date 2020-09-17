@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
 
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -26,7 +25,6 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import { CategoryContext } from "../contexts/CategoryContext";
 import { BlacklistContext } from "../contexts/BlacklistContext";
 import { SearchContext } from "../contexts/SearchContext";
-import { FavoriteContext } from "../contexts/FavoriteContext";
 
 import JokeList from "./JokeList";
 
@@ -146,6 +144,7 @@ function ResponsiveDrawer(props) {
     setFlags({ ...flags });
   };
 
+  console.log(props);
   const drawer = (
     <div>
       <div className={classes.toolbar}>
@@ -331,11 +330,13 @@ function ResponsiveDrawer(props) {
             Jokes
           </Typography>
           <div className={classes.appBarIconsRight}>
-            <Link to="/favorites">
-              <IconButton aria-label="view favorite jokes" color="inherit">
-                <FavoriteIcon />
-              </IconButton>
-            </Link>
+            <IconButton
+              aria-label="view favorite jokes"
+              color="inherit"
+              onClick={() => props.history.push("/favorites")}
+            >
+              <FavoriteIcon />
+            </IconButton>
           </div>
         </Toolbar>
       </AppBar>

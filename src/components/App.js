@@ -14,11 +14,9 @@ function App() {
         <SearchProvider>
           <FavoriteProvider>
             <Switch>
-              <Route path="/" exact render={() => <Drawer />} />
               <Route
-                path="/favorites"
-                exact
-                render={() => <h2>favorites</h2>}
+                path="/"
+                render={(routeProps) => <Drawer {...routeProps} />}
               />
               <Route render={() => <h2>404</h2>} />
             </Switch>
