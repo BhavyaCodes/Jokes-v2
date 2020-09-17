@@ -11,7 +11,7 @@ export function FavoriteProvider(props) {
   );
 
   const addFavoriteJoke = (joke) => {
-    setFavoriteJokes([...favoriteJokes, joke]);
+    setFavoriteJokes([joke, ...favoriteJokes]);
     addFavoriteId(joke.id);
   };
 
@@ -21,7 +21,7 @@ export function FavoriteProvider(props) {
   };
 
   const addFavoriteId = (id) => {
-    setFavoritesId([...favoritesId, id]);
+    setFavoritesId([id, ...favoritesId]);
   };
 
   const removeFavoriteId = (idToRemove) => {
