@@ -389,14 +389,16 @@ function ResponsiveDrawer(props) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         {location === "/favorites" ? <FavoriteJokeList /> : <JokeList />}
-        <Fab
-          color="secondary"
-          aria-label="refresh"
-          className={classes.refreshButton}
-          onClick={refresh}
-        >
-          <RefreshIcon />
-        </Fab>
+        {location === "/favorites" ? null : (
+          <Fab
+            color="secondary"
+            aria-label="refresh"
+            className={classes.refreshButton}
+            onClick={refresh}
+          >
+            <RefreshIcon />
+          </Fab>
+        )}
       </main>
     </div>
   );
