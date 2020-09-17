@@ -18,6 +18,8 @@ import Radio from "@material-ui/core/Radio";
 import Button from "@material-ui/core/Button";
 import InputBase from "@material-ui/core/InputBase";
 import SearchIcon from "@material-ui/icons/Search";
+import Fab from "@material-ui/core/Fab";
+import RefreshIcon from "@material-ui/icons/Refresh";
 
 import { CategoryContext } from "../contexts/CategoryContext";
 import { BlacklistContext } from "../contexts/BlacklistContext";
@@ -104,6 +106,14 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: theme.spacing(1),
     paddingButtom: theme.spacing(1),
     paddingLeft: theme.spacing(6),
+  },
+  refreshButton: {
+    position: "fixed",
+    right: theme.spacing(3),
+    bottom: theme.spacing(3),
+  },
+  resetButton: {
+    width: "90%",
   },
 }));
 
@@ -278,6 +288,7 @@ function ResponsiveDrawer(props) {
       </List>
       <div className={classes.boxContainer}>
         <Button
+          className={classes.resetButton}
           variant="contained"
           onClick={() => {
             resetCategories();
@@ -286,9 +297,6 @@ function ResponsiveDrawer(props) {
           }}
         >
           Reset filters
-        </Button>
-        <Button variant="contained" color="primary" onClick={refresh}>
-          Refresh
         </Button>
       </div>
     </div>
@@ -351,6 +359,14 @@ function ResponsiveDrawer(props) {
       <main className={classes.content}>
         <div className={classes.toolbar} />
         <JokeList />
+        <Fab
+          color="secondary"
+          aria-label="refresh"
+          className={classes.refreshButton}
+          onClick={refresh}
+        >
+          <RefreshIcon />
+        </Fab>
       </main>
     </div>
   );
