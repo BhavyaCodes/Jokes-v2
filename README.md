@@ -1,5 +1,8 @@
+# Link to App - https://jokes-hooks.vercel.app/
+
 ## Todo -
 
 - [ ] fix drawer warning
-- [ ] add drawer close button
-- [ ] Debounce api
+- [x] add drawer close button
+- [x] Debounce api
+- [ ] add sharing functionality
