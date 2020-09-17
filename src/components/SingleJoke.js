@@ -5,8 +5,11 @@ import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 import ShareIcon from "@material-ui/icons/Share";
+import Favorite from "@material-ui/icons/Favorite";
+import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Checkbox from "@material-ui/core/Checkbox";
 
 import Chips from "./Chips";
 
@@ -28,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: theme.spacing(0),
     paddingBottom: theme.spacing(0),
   },
+  favorite: {
+    paddingLeft: "12px",
+    marginRight: 0,
+  },
 }));
 
 function SingleJoke({ joke }) {
@@ -45,9 +52,16 @@ function SingleJoke({ joke }) {
           <Chips category={joke.category} flags={joke.flags} />
         </CardContent>
         <CardActions disableSpacing className={classes.CardActions}>
-          <IconButton aria-label="add to favorites">
-            <FavoriteIcon />
-          </IconButton>
+          <FormControlLabel
+            className={classes.favorite}
+            control={
+              <Checkbox
+                icon={<FavoriteBorder />}
+                checkedIcon={<Favorite />}
+                name="checkedH"
+              />
+            }
+          />
           <IconButton aria-label="share">
             <ShareIcon />
           </IconButton>
