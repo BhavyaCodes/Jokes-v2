@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -132,7 +133,6 @@ function ResponsiveDrawer(props) {
     BlacklistContext
   );
   const { term, handleInput, resetTerm } = useContext(SearchContext);
-  const { favorites, setFavorites } = useContext(FavoriteContext);
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -145,8 +145,6 @@ function ResponsiveDrawer(props) {
   const refresh = () => {
     setFlags({ ...flags });
   };
-
-  console.log(favorites);
 
   const drawer = (
     <div>
@@ -333,14 +331,11 @@ function ResponsiveDrawer(props) {
             Jokes
           </Typography>
           <div className={classes.appBarIconsRight}>
-            <IconButton
-              // aria-label="account of current user"
-              // aria-controls="menu-appbar"
-              // onClick={handleMenu}
-              color="inherit"
-            >
-              <FavoriteIcon />
-            </IconButton>
+            <Link to="/favorites">
+              <IconButton aria-label="view favorite jokes" color="inherit">
+                <FavoriteIcon />
+              </IconButton>
+            </Link>
           </div>
         </Toolbar>
       </AppBar>
