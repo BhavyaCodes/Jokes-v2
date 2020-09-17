@@ -11,6 +11,7 @@ import jokesApi from "../api/jokesApi";
 
 import SingleJoke from "./SingleJoke";
 import TwoPartJoke from "./TwoPartJoke";
+import LoadingList from "./LoadingList";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -89,7 +90,7 @@ function JokeList() {
       if (!isLoading) {
         setDebouncedInfo({ flags, categories, term });
       }
-    }, 1000);
+    }, 400);
     return () => {
       clearInterval(timeoutId);
     };
@@ -97,6 +98,15 @@ function JokeList() {
 
   return (
     <div className={classes.root}>
+      {isLoading ? (
+        <Grid container spacing={3}>
+          {Array.from({ length: 6 }).map((i) => (
+            <Grid item sm={12} md={6} className={classes.gridItem}>
+              <LoadingList />
+            </Grid>
+          ))}
+        </Grid>
+      ) : null}
       {jokes && !error ? (
         <Grid container spacing={3}>
           {jokes.map((joke) => (
