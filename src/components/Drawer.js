@@ -27,6 +27,7 @@ import { BlacklistContext } from "../contexts/BlacklistContext";
 import { SearchContext } from "../contexts/SearchContext";
 
 import JokeList from "./JokeList";
+import FavoriteJokeList from "./FavoriteJokeList";
 
 const drawerWidth = 300;
 
@@ -374,7 +375,11 @@ function ResponsiveDrawer(props) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        <JokeList />
+        {props.location.pathname === "/favorites" ? (
+          <FavoriteJokeList />
+        ) : (
+          <JokeList />
+        )}
         <Fab
           color="secondary"
           aria-label="refresh"
