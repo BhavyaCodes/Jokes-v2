@@ -30,7 +30,7 @@ import { SearchContext } from "../contexts/SearchContext";
 
 import JokeList from "./JokeList";
 import FavoriteJokeList from "./FavoriteJokeList";
-import { Translate } from "@material-ui/icons";
+import Footer from "./Footer";
 
 const drawerWidth = 300;
 
@@ -134,6 +134,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up("sm")]: {
       display: "none",
     },
+  },
+  contentWrapper: {
+    width: "100%",
   },
 }));
 
@@ -410,20 +413,23 @@ function ResponsiveDrawer(props) {
           </SwipeableDrawer>
         </Hidden>
       </nav>
-      <main className={classes.content}>
-        <div className={classes.toolbar} />
-        {location === "/favorites" ? <FavoriteJokeList /> : <JokeList />}
-        {location === "/favorites" ? null : (
-          <Fab
-            color="secondary"
-            aria-label="refresh"
-            className={classes.refreshButton}
-            onClick={refresh}
-          >
-            <RefreshIcon />
-          </Fab>
-        )}
-      </main>
+      <div className={classes.contentWrapper}>
+        <main className={classes.content}>
+          <div className={classes.toolbar} />
+          {location === "/favorites" ? <FavoriteJokeList /> : <JokeList />}
+          {location === "/favorites" ? null : (
+            <Fab
+              color="secondary"
+              aria-label="refresh"
+              className={classes.refreshButton}
+              onClick={refresh}
+            >
+              <RefreshIcon />
+            </Fab>
+          )}
+        </main>
+        <Footer />
+      </div>
     </div>
   );
 }
