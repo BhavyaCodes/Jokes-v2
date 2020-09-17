@@ -41,22 +41,23 @@ const useStyles = makeStyles((theme) => ({
 
 function SingleJoke({ joke }) {
   const classes = useStyles();
-  const { favorites, addFavorite, removeFavorite } = useContext(
+  const { favoritesId, addFavoriteJoke, removeFavoriteJoke } = useContext(
     FavoriteContext
   );
 
   const checkFavorite = (id) => {
-    return favorites.includes(id);
+    return favoritesId.includes(id);
   };
 
   const handleChange = (e) => {
     if (e.target.checked) {
-      addFavorite(joke.id);
+      addFavoriteJoke(joke);
     }
     if (e.target.checked === false) {
-      removeFavorite(joke.id);
+      removeFavoriteJoke(joke.id);
     }
   };
+
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>

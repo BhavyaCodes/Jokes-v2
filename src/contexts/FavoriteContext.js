@@ -4,20 +4,39 @@ import useLocalStorageStage from "../hooks/useLocalStorageState";
 export const FavoriteContext = createContext();
 
 export function FavoriteProvider(props) {
-  const [favorites, setFavorites] = useLocalStorageStage("favoriteId", []);
+  const [favoritesId, setFavoritesId] = useLocalStorageStage("favoritesId", []);
+  const [favoriteJokes, setFavoriteJokes] = useLocalStorageStage(
+    "favoriteJokes",
+    []
+  );
 
-  const addFavorite = (id) => {
-    setFavorites([...favorites, id]);
+  const addFavoriteJoke = (joke) => {
+    setFavoriteJokes([...favoriteJokes, joke]);
+    addFavoriteId(joke.id);
   };
 
-  const removeFavorite = (idToRemove) => {
-    const updatedFavorites = favorites.filter((id) => id !== idToRemove);
-    setFavorites(updatedFavorites);
+  const removeFavoriteJoke = (id) => {
+    setFavoriteJokes(favoriteJokes.filter((joke) => joke.id !== id));
+    removeFavoriteId(id);
+  };
+
+  const addFavoriteId = (id) => {
+    setFavoritesId([...favoritesId, id]);
+  };
+
+  const removeFavoriteId = (idToRemove) => {
+    const updatedFavorites = favoritesId.filter((id) => id !== idToRemove);
+    setFavoritesId(updatedFavorites);
   };
 
   return (
     <FavoriteContext.Provider
-      value={{ favorites, setFavorites, addFavorite, removeFavorite }}
+      value={{
+        favoritesId,
+        setFavoritesId,
+        addFavoriteJoke,
+        removeFavoriteJoke,
+      }}
     >
       {props.children}
     </FavoriteContext.Provider>
