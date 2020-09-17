@@ -1,22 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 
 import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
 
 import SingleJoke from "./SingleJoke";
 import TwoPartJoke from "./TwoPartJoke";
 
 import { FavoriteContext } from "../contexts/FavoriteContext";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    padding: theme.spacing(2),
-  },
-  gridItem: {
-    width: "100%",
-  },
-}));
+import useStyles from "../styles/FavoriteJokeListStyles";
 
 function JokeList() {
   const classes = useStyles();

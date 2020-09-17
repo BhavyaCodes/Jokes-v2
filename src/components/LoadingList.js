@@ -1,16 +1,7 @@
 import React from "react";
 import Skeleton from "@material-ui/lab/Skeleton";
-import { makeStyles } from "@material-ui/core/styles";
 
-const useStyles = makeStyles({
-  root: {
-    width: "100%",
-  },
-  skeleton: {
-    marginTop: "10px",
-    borderRadius: "3px",
-  },
-});
+import useStyles from "../styles/LoadingListStyles";
 
 export default function LoadingList() {
   const classes = useStyles();

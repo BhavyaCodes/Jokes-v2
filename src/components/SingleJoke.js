@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -17,37 +16,7 @@ import CloseIcon from "@material-ui/icons/Close";
 import Chips from "./Chips";
 
 import { FavoriteContext } from "../contexts/FavoriteContext";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    minWidth: 275,
-    height: "100%",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-  chipContainer: {
-    paddingTop: theme.spacing(0),
-    paddingBottom: theme.spacing(0),
-  },
-  favorite: {
-    paddingLeft: "12px",
-    marginRight: 0,
-  },
-  SnackbarMessage: {
-    display: "flex",
-  },
-  SnackbarText: {
-    margin: "auto",
-    marginLeft: theme.spacing(1),
-  },
-}));
+import useStyles from "../styles/SingleJokeStyles";
 
 function SingleJoke({ joke }) {
   const [openSnackbar, setOpenSnackbar] = React.useState(false);

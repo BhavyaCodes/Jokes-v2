@@ -5,7 +5,7 @@ import { CategoryProvider } from "../contexts/CategoryContext";
 import { BlacklistProvider } from "../contexts/BlacklistContext";
 import { SearchProvider } from "../contexts/SearchContext";
 import { FavoriteProvider } from "../contexts/FavoriteContext";
-import Drawer from "./Drawer";
+import Home from "./Home";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
             <Switch>
               <Route
                 path="/"
-                render={(routeProps) => <Drawer {...routeProps} />}
+                render={(routeProps) => <Home {...routeProps} />}
               />
               <Route render={() => <h2>404</h2>} />
             </Switch>

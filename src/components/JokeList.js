@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 
 import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
 
 import { CategoryContext } from "../contexts/CategoryContext";
 import { BlacklistContext } from "../contexts/BlacklistContext";
@@ -12,16 +11,7 @@ import jokesApi from "../api/jokesApi";
 import SingleJoke from "./SingleJoke";
 import TwoPartJoke from "./TwoPartJoke";
 import LoadingList from "./LoadingList";
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-    padding: theme.spacing(2),
-  },
-  gridItem: {
-    width: "100%",
-  },
-}));
+import useStyles from "../styles/JokeListStyles";
 
 function JokeList() {
   const classes = useStyles();
