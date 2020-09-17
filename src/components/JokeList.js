@@ -27,29 +27,34 @@ function JokeList() {
   const [error, setError] = useState(false);
   // const [loading, setLoading] = useState(true);
   const [jokes, setJokes] = useState([]);
+  // const [debouncedJokes, setDebouncedJokes] = useState(jokes);
 
   const { flags } = useContext(BlacklistContext);
   const { categories } = useContext(CategoryContext);
   const { term } = useContext(SearchContext);
+
+  const [debouncedFlags, setDebouncedFlags] = useState(flags);
+  const [debouncedCategories, setDebouncedCategories] = useState(categories);
+  const [debouncedTerm, setDebouncedTerm] = useState(term);
 
   useEffect(() => {
     const getJokes = async () => {
       let categoryString = "";
       let flagString = "";
 
-      if (categories.all) {
+      if (debouncedCategories.all) {
         categoryString = "any";
       } else {
-        for (const key in categories) {
-          if (categories[key]) {
+        for (const key in debouncedCategories) {
+          if (debouncedCategories[key]) {
             categoryString += key.toString() + ",";
           }
         }
         categoryString = categoryString.slice(0, -1);
       }
 
-      for (const key in flags) {
-        if (flags[key]) {
+      for (const key in debouncedFlags) {
+        if (debouncedFlags[key]) {
           flagString += key.toString() + ",";
         }
       }
@@ -60,7 +65,7 @@ function JokeList() {
         const response = await jokesApi.get(`/${categoryString}?amount=6`, {
           params: {
             blacklistFlags: flagString || undefined,
-            contains: term || undefined,
+            contains: debouncedTerm || undefined,
           },
         });
         if (response.data.error) {
@@ -75,7 +80,19 @@ function JokeList() {
       }
     };
     getJokes();
+  }, [debouncedFlags, debouncedCategories, debouncedTerm]);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setDebouncedCategories(categories);
+      setDebouncedFlags(flags);
+      setDebouncedTerm(term);
+    }, 1000);
+    return () => {
+      clearInterval(timeoutId);
+    };
   }, [flags, categories, term]);
+
   return (
     <div className={classes.root}>
       {jokes && !error ? (
