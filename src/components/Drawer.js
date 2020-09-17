@@ -31,6 +31,7 @@ import { SearchContext } from "../contexts/SearchContext";
 import JokeList from "./JokeList";
 import FavoriteJokeList from "./FavoriteJokeList";
 import Footer from "./Footer";
+import logo from "../images/logo512.png";
 
 const drawerWidth = 300;
 
@@ -87,6 +88,16 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-around",
+  },
+  logoAndName: {
+    display: "flex",
+  },
+  logo: {
+    height: "48px",
+  },
+  name: {
+    margin: "auto",
+    marginLeft: theme.spacing(2),
   },
   search: {
     position: "relative",
@@ -357,9 +368,12 @@ function ResponsiveDrawer(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            Jokes
-          </Typography>
+          <div className={classes.logoAndName}>
+            <img src={logo} alt="logo" className={classes.logo} />
+            <Typography className={classes.name} variant="h6" noWrap>
+              Jokes
+            </Typography>
+          </div>
           <div className={classes.appBarIconsRight}>
             {location === "/favorites" ? (
               <IconButton
