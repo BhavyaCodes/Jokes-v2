@@ -58,13 +58,23 @@ export default makeStyles((theme) => ({
   },
   logoAndName: {
     display: "flex",
+    "& a": {
+      textDecoration: "none",
+    },
   },
   logo: {
     height: "48px",
+    [theme.breakpoints.down("sm")]: {
+      height: "36px",
+    },
   },
   name: {
     margin: "auto",
     marginLeft: theme.spacing(2),
+    textDecoration: "none",
+    "& a": {
+      color: "white",
+    },
   },
   search: {
     position: "relative",
