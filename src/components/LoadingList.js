@@ -4,7 +4,11 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
   root: {
-    width: 300,
+    width: "100%",
+  },
+  skeleton: {
+    marginTop: "10px",
+    borderRadius: "3px",
   },
 });
 
@@ -12,9 +16,25 @@ export default function LoadingList() {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <Skeleton />
-      <Skeleton animation={false} />
-      <Skeleton animation="wave" />
+      <Skeleton
+        className={classes.skeleton}
+        animation="wave"
+        variant="rect"
+        height={100}
+      />
+      <Skeleton
+        className={classes.skeleton}
+        animation="wave"
+        variant="rect"
+        height={20}
+      />
+      <Skeleton
+        className={classes.skeleton}
+        animation="wave"
+        variant="rect"
+        height={20}
+        width="100%"
+      />
     </div>
   );
 }

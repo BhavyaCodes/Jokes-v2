@@ -63,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
+    minHeight: "100vh",
     backgroundColor: theme.palette.grey[200],
   },
   filterText: {
