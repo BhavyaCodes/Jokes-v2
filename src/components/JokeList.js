@@ -25,47 +25,48 @@ const useStyles = makeStyles((theme) => ({
 function JokeList() {
   const classes = useStyles();
   const [error, setError] = useState(false);
-  // const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [jokes, setJokes] = useState([]);
-  // const [debouncedJokes, setDebouncedJokes] = useState(jokes);
 
   const { flags } = useContext(BlacklistContext);
   const { categories } = useContext(CategoryContext);
   const { term } = useContext(SearchContext);
 
-  const [debouncedFlags, setDebouncedFlags] = useState(flags);
-  const [debouncedCategories, setDebouncedCategories] = useState(categories);
-  const [debouncedTerm, setDebouncedTerm] = useState(term);
+  const [debouncedInfo, setDebouncedInfo] = useState({
+    flags,
+    categories,
+    term,
+  });
 
   useEffect(() => {
     const getJokes = async () => {
+      console.log(debouncedInfo);
       let categoryString = "";
       let flagString = "";
 
-      if (debouncedCategories.all) {
+      if (debouncedInfo.categories.all) {
         categoryString = "any";
       } else {
-        for (const key in debouncedCategories) {
-          if (debouncedCategories[key]) {
+        for (const key in debouncedInfo.categories) {
+          if (debouncedInfo.categories[key]) {
             categoryString += key.toString() + ",";
           }
         }
         categoryString = categoryString.slice(0, -1);
       }
 
-      for (const key in debouncedFlags) {
-        if (debouncedFlags[key]) {
+      for (const key in debouncedInfo.flags) {
+        if (debouncedInfo.flags[key]) {
           flagString += key.toString() + ",";
         }
       }
       flagString = flagString.slice(0, -1);
 
       try {
-        // console.log("tryblock");
         const response = await jokesApi.get(`/${categoryString}?amount=6`, {
           params: {
             blacklistFlags: flagString || undefined,
-            contains: debouncedTerm || undefined,
+            contains: debouncedInfo.term || undefined,
           },
         });
         if (response.data.error) {
@@ -73,6 +74,7 @@ function JokeList() {
         } else {
           setJokes(response.data.jokes);
           setError(false);
+          setIsLoading(false);
         }
       } catch (error) {
         setError(true);
@@ -80,13 +82,13 @@ function JokeList() {
       }
     };
     getJokes();
-  }, [debouncedFlags, debouncedCategories, debouncedTerm]);
+  }, [debouncedInfo]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      setDebouncedCategories(categories);
-      setDebouncedFlags(flags);
-      setDebouncedTerm(term);
+      if (!isLoading) {
+        setDebouncedInfo({ flags, categories, term });
+      }
     }, 1000);
     return () => {
       clearInterval(timeoutId);
