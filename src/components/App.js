@@ -1,4 +1,5 @@
 import React from "react";
+import { Switch, Route } from "react-router-dom";
 
 import { CategoryProvider } from "../contexts/CategoryContext";
 import { BlacklistProvider } from "../contexts/BlacklistContext";
@@ -12,7 +13,11 @@ function App() {
       <BlacklistProvider>
         <SearchProvider>
           <FavoriteProvider>
-            <Drawer />
+            <Switch>
+              <Route path="/" exact render={() => <Drawer />} />
+              <Route path="/test" exact render={() => <h2>test</h2>} />
+              <Route render={() => <h2>404</h2>} />
+            </Switch>
           </FavoriteProvider>
         </SearchProvider>
       </BlacklistProvider>
