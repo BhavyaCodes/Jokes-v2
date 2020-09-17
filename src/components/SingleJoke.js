@@ -41,7 +41,9 @@ const useStyles = makeStyles((theme) => ({
 
 function SingleJoke({ joke }) {
   const classes = useStyles();
-  const { favorites, addFavorites } = useContext(FavoriteContext);
+  const { favorites, addFavorite, removeFavorite } = useContext(
+    FavoriteContext
+  );
 
   const checkFavorite = (id) => {
     return favorites.includes(id);
@@ -49,7 +51,10 @@ function SingleJoke({ joke }) {
 
   const handleChange = (e) => {
     if (e.target.checked) {
-      addFavorites(joke.id);
+      addFavorite(joke.id);
+    }
+    if (e.target.checked === false) {
+      removeFavorite(joke.id);
     }
   };
   return (
