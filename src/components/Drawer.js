@@ -22,6 +22,7 @@ import Fab from "@material-ui/core/Fab";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
 import { CategoryContext } from "../contexts/CategoryContext";
 import { BlacklistContext } from "../contexts/BlacklistContext";
@@ -29,6 +30,7 @@ import { SearchContext } from "../contexts/SearchContext";
 
 import JokeList from "./JokeList";
 import FavoriteJokeList from "./FavoriteJokeList";
+import { Translate } from "@material-ui/icons";
 
 const drawerWidth = 300;
 
@@ -123,6 +125,16 @@ const useStyles = makeStyles((theme) => ({
     margin: "auto",
     marginRight: 0,
   },
+  drawerHeader: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "space-between",
+  },
+  chevronIcon: {
+    [theme.breakpoints.up("sm")]: {
+      display: "none",
+    },
+  },
 }));
 
 function ResponsiveDrawer(props) {
@@ -144,6 +156,10 @@ function ResponsiveDrawer(props) {
     setMobileOpen(!mobileOpen);
   };
 
+  const handleDrawerClose = () => {
+    setMobileOpen(false);
+  };
+
   const refresh = () => {
     setFlags({ ...flags });
   };
@@ -152,9 +168,17 @@ function ResponsiveDrawer(props) {
   const drawer = (
     <div>
       <div className={classes.toolbar}>
-        <Typography className={classes.filterText} variant="h4">
-          Filters
-        </Typography>
+        <div className={classes.drawerHeader}>
+          <Typography className={classes.filterText} variant="h4">
+            Filters
+          </Typography>
+          <IconButton
+            onClick={handleDrawerClose}
+            className={classes.chevronIcon}
+          >
+            <ChevronLeftIcon />
+          </IconButton>
+        </div>
       </div>
       <Divider />
       <div className={classes.search}>
