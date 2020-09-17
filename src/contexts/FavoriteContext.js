@@ -36,6 +36,7 @@ export function FavoriteProvider(props) {
         setFavoritesId,
         addFavoriteJoke,
         removeFavoriteJoke,
+        favoriteJokes,
       }}
     >
       {props.children}

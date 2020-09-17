@@ -21,6 +21,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import Fab from "@material-ui/core/Fab";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 import { CategoryContext } from "../contexts/CategoryContext";
 import { BlacklistContext } from "../contexts/BlacklistContext";
@@ -136,6 +137,8 @@ function ResponsiveDrawer(props) {
   const classes = useStyles();
   const theme = useTheme();
   const [mobileOpen, setMobileOpen] = React.useState(false);
+
+  const location = props.location.pathname;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -331,13 +334,23 @@ function ResponsiveDrawer(props) {
             Jokes
           </Typography>
           <div className={classes.appBarIconsRight}>
-            <IconButton
-              aria-label="view favorite jokes"
-              color="inherit"
-              onClick={() => props.history.push("/favorites")}
-            >
-              <FavoriteIcon />
-            </IconButton>
+            {location === "/favorites" ? (
+              <IconButton
+                aria-label="view favorite jokes"
+                color="inherit"
+                onClick={() => props.history.push("/")}
+              >
+                <ArrowBackIcon />
+              </IconButton>
+            ) : (
+              <IconButton
+                aria-label="view favorite jokes"
+                color="inherit"
+                onClick={() => props.history.push("/favorites")}
+              >
+                <FavoriteIcon />
+              </IconButton>
+            )}
           </div>
         </Toolbar>
       </AppBar>
@@ -375,11 +388,7 @@ function ResponsiveDrawer(props) {
       </nav>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {props.location.pathname === "/favorites" ? (
-          <FavoriteJokeList />
-        ) : (
-          <JokeList />
-        )}
+        {location === "/favorites" ? <FavoriteJokeList /> : <JokeList />}
         <Fab
           color="secondary"
           aria-label="refresh"
