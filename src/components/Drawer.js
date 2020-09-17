@@ -111,8 +111,10 @@ function ResponsiveDrawer(props) {
   const { categories, changeCategories, resetCategories } = useContext(
     CategoryContext
   );
-  const { flags, changeFlags, resetFlags } = useContext(BlacklistContext);
-  const { term, handleInput } = useContext(SearchContext);
+  const { flags, changeFlags, resetFlags, setFlags } = useContext(
+    BlacklistContext
+  );
+  const { term, handleInput, resetTerm } = useContext(SearchContext);
   const { window } = props;
   const classes = useStyles();
   const theme = useTheme();
@@ -120,6 +122,10 @@ function ResponsiveDrawer(props) {
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const refresh = () => {
+    setFlags({ ...flags });
   };
 
   const drawer = (
@@ -276,11 +282,12 @@ function ResponsiveDrawer(props) {
           onClick={() => {
             resetCategories();
             resetFlags();
+            resetTerm();
           }}
         >
           Reset filters
         </Button>
-        <Button variant="contained" color="primary">
+        <Button variant="contained" color="primary" onClick={refresh}>
           Refresh
         </Button>
       </div>

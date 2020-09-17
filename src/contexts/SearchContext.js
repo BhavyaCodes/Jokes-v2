@@ -8,8 +8,12 @@ export function SearchProvider(props) {
   const handleInput = (e) => {
     setTerm(e.target.value);
   };
+
+  const resetTerm = () => {
+    setTerm("");
+  };
   return (
-    <SearchContext.Provider value={{ term, handleInput }}>
+    <SearchContext.Provider value={{ term, handleInput, resetTerm }}>
       {props.children}
     </SearchContext.Provider>
   );

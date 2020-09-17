@@ -29,7 +29,9 @@ export function BlacklistProvider(props) {
   };
 
   return (
-    <BlacklistContext.Provider value={{ flags, changeFlags, resetFlags }}>
+    <BlacklistContext.Provider
+      value={{ flags, changeFlags, resetFlags, setFlags }}
+    >
       {props.children}
     </BlacklistContext.Provider>
   );
