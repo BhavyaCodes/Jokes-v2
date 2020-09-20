@@ -89,8 +89,8 @@ function JokeList() {
     <div className={classes.root}>
       {isLoading ? (
         <Grid container spacing={3}>
-          {Array.from({ length: 6 }).map((i) => (
-            <Grid item sm={12} md={6} className={classes.gridItem}>
+          {Array.from({ length: 6 }).map((i, index) => (
+            <Grid key={index} item sm={12} md={6} className={classes.gridItem}>
               <LoadingList />
             </Grid>
           ))}
@@ -99,7 +99,13 @@ function JokeList() {
       {jokes && !error ? (
         <Grid container spacing={3}>
           {jokes.map((joke) => (
-            <Grid item sm={12} md={6} className={classes.gridItem}>
+            <Grid
+              key={joke.id}
+              item
+              sm={12}
+              md={6}
+              className={classes.gridItem}
+            >
               {joke.type === "single" ? (
                 <SingleJoke joke={joke} />
               ) : (

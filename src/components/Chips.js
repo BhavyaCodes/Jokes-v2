@@ -13,7 +13,7 @@ function Chips({ category, flags }) {
         label={category}
       />
       {Object.keys(flags).map((key) => (
-        <>
+        <React.Fragment key={key}>
           {flags[key] ? (
             <Chip
               className={`${classes[`${key}`]} ${classes.chip} `}
@@ -21,7 +21,7 @@ function Chips({ category, flags }) {
               label={key.toString()}
             />
           ) : null}
-        </>
+        </React.Fragment>
       ))}
     </div>
   );

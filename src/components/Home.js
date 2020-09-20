@@ -333,6 +333,8 @@ function Home(props) {
             classes={{
               paper: classes.drawerPaper,
             }}
+            onClose={handleDrawerToggle}
+            onOpen={handleDrawerToggle}
             variant="permanent"
             open
           >

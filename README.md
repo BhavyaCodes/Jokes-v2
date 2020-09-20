@@ -2,7 +2,7 @@
 
 ## Todo -
 
-- [ ] fix drawer warning
+- [x] fix drawer warning
 - [x] add drawer close button
 - [x] Debounce api
 - [ ] add sharing functionality
