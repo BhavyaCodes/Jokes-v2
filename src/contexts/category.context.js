@@ -1,9 +1,11 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useReducer } from "react";
+import categoryReducer from "../reducers/category.reducer";
 
 export const CategoryContext = createContext();
+export const DispatchCategoryContext = createContext();
 
 export function CategoryProvider(props) {
-  const [categories, setCategories] = useState({
+  const [categories, dispatch] = useReducer(categoryReducer, {
     all: true,
     programming: false,
     miscellaneous: false,
@@ -11,38 +13,11 @@ export function CategoryProvider(props) {
     pun: false,
   });
 
-  const changeCategories = (e) => {
-    if (e.target.name !== "all") {
-      setCategories({
-        ...categories,
-        [e.target.name]: !categories[e.target.name],
-        all: false,
-      });
-    } else if (e.target.name === "all") {
-      setCategories({
-        all: true,
-        programming: false,
-        miscellaneous: false,
-        dark: false,
-        pun: false,
-      });
-    }
-  };
-
-  const resetCategories = () => {
-    setCategories({
-      all: true,
-      programming: false,
-      miscellaneous: false,
-      dark: false,
-      pun: false,
-    });
-  };
   return (
-    <CategoryContext.Provider
-      value={{ categories, changeCategories, resetCategories }}
-    >
-      {props.children}
+    <CategoryContext.Provider value={categories}>
+      <DispatchCategoryContext.Provider value={dispatch}>
+        {props.children}
+      </DispatchCategoryContext.Provider>
     </CategoryContext.Provider>
   );
 }

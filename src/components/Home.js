@@ -26,7 +26,10 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Tooltip from "@material-ui/core/Tooltip";
 
-import { CategoryContext } from "../contexts/category.context";
+import {
+  CategoryContext,
+  DispatchCategoryContext,
+} from "../contexts/category.context";
 import {
   BlacklistContext,
   DispatchBlacklistContext,
@@ -40,12 +43,11 @@ import logo from "../images/logo512.png";
 import useStyles from "../styles/HomeStyles";
 
 function Home(props) {
-  const { categories, changeCategories, resetCategories } = useContext(
-    CategoryContext
-  );
-  // const { flags, changeFlags, resetFlags, setFlags } = useContext(
-  //   BlacklistContext
+  // const { categories, changeCategories, resetCategories } = useContext(
+  //   CategoryContext
   // );
+  const categories = useContext(CategoryContext);
+  const dispatchCategory = useContext(DispatchCategoryContext);
   const flags = useContext(BlacklistContext);
   const dispatchBlacklist = useContext(DispatchBlacklistContext);
   const { term, handleInput, resetTerm } = useContext(SearchContext);
@@ -66,6 +68,14 @@ function Home(props) {
 
   const refresh = () => {
     dispatchBlacklist({ type: "RESET" });
+  };
+
+  const handleCategoryChange = (e) => {
+    if (e.target.name === "all") {
+      dispatchCategory({ type: "ALL" });
+    } else {
+      dispatchCategory({ type: "TOGGLE_CHECKBOX", name: e.target.name });
+    }
   };
 
   const handleBlacklistChange = (e) => {
@@ -113,7 +123,7 @@ function Home(props) {
                 color="primary"
                 checked={categories.all}
                 name="all"
-                onChange={changeCategories}
+                onChange={handleCategoryChange}
               />
             }
             label="All"
@@ -122,7 +132,7 @@ function Home(props) {
             control={
               <Checkbox
                 checked={categories.programming}
-                onChange={changeCategories}
+                onChange={handleCategoryChange}
                 name="programming"
                 color="primary"
               />
@@ -133,7 +143,7 @@ function Home(props) {
             control={
               <Checkbox
                 checked={categories.miscellaneous}
-                onChange={changeCategories}
+                onChange={handleCategoryChange}
                 name="miscellaneous"
                 color="primary"
               />
@@ -144,7 +154,7 @@ function Home(props) {
             control={
               <Checkbox
                 checked={categories.dark}
-                onChange={changeCategories}
+                onChange={handleCategoryChange}
                 name="dark"
                 color="primary"
               />
@@ -155,7 +165,7 @@ function Home(props) {
             control={
               <Checkbox
                 checked={categories.pun}
-                onChange={changeCategories}
+                onChange={handleCategoryChange}
                 name="pun"
                 color="primary"
               />
@@ -232,7 +242,8 @@ function Home(props) {
           className={classes.resetButton}
           variant="contained"
           onClick={() => {
-            resetCategories();
+            // resetCategories();
+            dispatchCategory({ type: "RESET" });
             dispatchBlacklist({ type: "RESET" });
             resetTerm();
           }}
