@@ -31,7 +31,6 @@ function JokeList() {
 
   useEffect(() => {
     const getJokes = async () => {
-      console.log(debouncedInfo);
       let categoryString = "";
       let flagString = "";
 

@@ -65,11 +65,12 @@ function Home(props) {
   };
 
   const refresh = () => {
-    // setFlags({ ...flags });
     dispatchBlacklist({ type: "RESET" });
   };
 
-  console.log(props);
+  const handleBlacklistChange = (e) => {
+    dispatchBlacklist({ type: "TOGGLE", name: e.target.name });
+  };
   const drawer = (
     <div>
       <div className={classes.toolbar}>
@@ -173,9 +174,7 @@ function Home(props) {
             control={
               <Checkbox
                 checked={flags.nsfw}
-                onChange={() =>
-                  dispatchBlacklist({ type: "TOGGLE", name: "nsfw" })
-                }
+                onChange={handleBlacklistChange}
                 name="nsfw"
                 color="primary"
               />
@@ -186,9 +185,7 @@ function Home(props) {
             control={
               <Checkbox
                 checked={flags.religious}
-                onChange={() =>
-                  dispatchBlacklist({ type: "TOGGLE", name: "religious" })
-                }
+                onChange={handleBlacklistChange}
                 name="religious"
                 color="primary"
               />
@@ -199,9 +196,7 @@ function Home(props) {
             control={
               <Checkbox
                 checked={flags.political}
-                onChange={() =>
-                  dispatchBlacklist({ type: "TOGGLE", name: "political" })
-                }
+                onChange={handleBlacklistChange}
                 name="political"
                 color="primary"
               />
@@ -212,9 +207,7 @@ function Home(props) {
             control={
               <Checkbox
                 checked={flags.racist}
-                onChange={() =>
-                  dispatchBlacklist({ type: "TOGGLE", name: "racist" })
-                }
+                onChange={handleBlacklistChange}
                 name="racist"
                 color="primary"
               />
@@ -225,9 +218,7 @@ function Home(props) {
             control={
               <Checkbox
                 checked={flags.sexist}
-                onChange={() =>
-                  dispatchBlacklist({ type: "TOGGLE", name: "sexist" })
-                }
+                onChange={handleBlacklistChange}
                 name="sexist"
                 color="primary"
               />
