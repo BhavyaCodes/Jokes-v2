@@ -21,7 +21,7 @@ function JokeList() {
 
   const flags = useContext(BlacklistContext);
   const categories = useContext(CategoryContext);
-  const { term } = useContext(SearchContext);
+  const term = useContext(SearchContext);
 
   const [debouncedInfo, setDebouncedInfo] = useState({
     flags,

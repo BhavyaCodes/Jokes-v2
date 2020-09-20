@@ -34,7 +34,10 @@ import {
   BlacklistContext,
   DispatchBlacklistContext,
 } from "../contexts/blacklist.context";
-import { SearchContext } from "../contexts/search.context";
+import {
+  SearchContext,
+  DispatchSearchContext,
+} from "../contexts/search.context";
 
 import JokeList from "./JokeList";
 import FavoriteJokeList from "./FavoriteJokeList";
@@ -43,14 +46,13 @@ import logo from "../images/logo512.png";
 import useStyles from "../styles/HomeStyles";
 
 function Home(props) {
-  // const { categories, changeCategories, resetCategories } = useContext(
-  //   CategoryContext
-  // );
   const categories = useContext(CategoryContext);
   const dispatchCategory = useContext(DispatchCategoryContext);
   const flags = useContext(BlacklistContext);
   const dispatchBlacklist = useContext(DispatchBlacklistContext);
-  const { term, handleInput, resetTerm } = useContext(SearchContext);
+  // const { term, handleInput, resetTerm } = useContext(SearchContext);
+  const term = useContext(SearchContext);
+  const dispatchSearch = useContext(DispatchSearchContext);
   const { window } = props;
   const classes = useStyles();
   // const theme = useTheme();
@@ -70,6 +72,9 @@ function Home(props) {
     dispatchBlacklist({ type: "RESET" });
   };
 
+  const handleSearch = (e) => {
+    dispatchSearch({ type: "UPDATE", term: e.target.value });
+  };
   const handleCategoryChange = (e) => {
     if (e.target.name === "all") {
       dispatchCategory({ type: "ALL" });
@@ -102,7 +107,7 @@ function Home(props) {
           <SearchIcon />
         </div>
         <InputBase
-          onChange={handleInput}
+          onChange={handleSearch}
           value={term}
           placeholder="search..."
           classes={{
@@ -242,10 +247,9 @@ function Home(props) {
           className={classes.resetButton}
           variant="contained"
           onClick={() => {
-            // resetCategories();
             dispatchCategory({ type: "RESET" });
             dispatchBlacklist({ type: "RESET" });
-            resetTerm();
+            dispatchSearch({ type: "RESET" });
           }}
         >
           Reset filters

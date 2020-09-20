@@ -11,3 +11,7 @@
 - [ ] remove console.logs
 - [ ] fix keyboard not closing after searching
 - [ ] update repository link
+
+### Issues -
+
+- [ ] Lag with search input
