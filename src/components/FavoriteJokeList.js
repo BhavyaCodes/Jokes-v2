@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 import SingleJoke from "./SingleJoke";
 import TwoPartJoke from "./TwoPartJoke";
 
-import { FavoriteContext } from "../contexts/FavoriteContext";
+import { FavoriteContext } from "../contexts/favorite.context";
 
 import useStyles from "../styles/FavoriteJokeListStyles";
 

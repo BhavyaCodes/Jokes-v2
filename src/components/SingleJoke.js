@@ -16,7 +16,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 
 import Chips from "./Chips";
 
-import { FavoriteContext } from "../contexts/FavoriteContext";
+import { FavoriteContext } from "../contexts/favorite.context";
 import useStyles from "../styles/SingleJokeStyles";
 
 function SingleJoke({ joke }) {

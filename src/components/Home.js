@@ -26,9 +26,9 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Tooltip from "@material-ui/core/Tooltip";
 
-import { CategoryContext } from "../contexts/CategoryContext";
-import { BlacklistContext } from "../contexts/BlacklistContext";
-import { SearchContext } from "../contexts/SearchContext";
+import { CategoryContext } from "../contexts/category.context";
+import { BlacklistContext } from "../contexts/blacklist.context";
+import { SearchContext } from "../contexts/search.context";
 
 import JokeList from "./JokeList";
 import FavoriteJokeList from "./FavoriteJokeList";
