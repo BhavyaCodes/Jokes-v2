@@ -27,7 +27,10 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Tooltip from "@material-ui/core/Tooltip";
 
 import { CategoryContext } from "../contexts/category.context";
-import { BlacklistContext } from "../contexts/blacklist.context";
+import {
+  BlacklistContext,
+  DispatchBlacklistContext,
+} from "../contexts/blacklist.context";
 import { SearchContext } from "../contexts/search.context";
 
 import JokeList from "./JokeList";
@@ -40,9 +43,11 @@ function Home(props) {
   const { categories, changeCategories, resetCategories } = useContext(
     CategoryContext
   );
-  const { flags, changeFlags, resetFlags, setFlags } = useContext(
-    BlacklistContext
-  );
+  // const { flags, changeFlags, resetFlags, setFlags } = useContext(
+  //   BlacklistContext
+  // );
+  const flags = useContext(BlacklistContext);
+  const dispatchBlacklist = useContext(DispatchBlacklistContext);
   const { term, handleInput, resetTerm } = useContext(SearchContext);
   const { window } = props;
   const classes = useStyles();
@@ -60,7 +65,8 @@ function Home(props) {
   };
 
   const refresh = () => {
-    setFlags({ ...flags });
+    // setFlags({ ...flags });
+    dispatchBlacklist({ type: "RESET" });
   };
 
   console.log(props);
@@ -167,7 +173,9 @@ function Home(props) {
             control={
               <Checkbox
                 checked={flags.nsfw}
-                onChange={changeFlags}
+                onChange={() =>
+                  dispatchBlacklist({ type: "TOGGLE", name: "nsfw" })
+                }
                 name="nsfw"
                 color="primary"
               />
@@ -178,7 +186,9 @@ function Home(props) {
             control={
               <Checkbox
                 checked={flags.religious}
-                onChange={changeFlags}
+                onChange={() =>
+                  dispatchBlacklist({ type: "TOGGLE", name: "religious" })
+                }
                 name="religious"
                 color="primary"
               />
@@ -189,7 +199,9 @@ function Home(props) {
             control={
               <Checkbox
                 checked={flags.political}
-                onChange={changeFlags}
+                onChange={() =>
+                  dispatchBlacklist({ type: "TOGGLE", name: "political" })
+                }
                 name="political"
                 color="primary"
               />
@@ -200,7 +212,9 @@ function Home(props) {
             control={
               <Checkbox
                 checked={flags.racist}
-                onChange={changeFlags}
+                onChange={() =>
+                  dispatchBlacklist({ type: "TOGGLE", name: "racist" })
+                }
                 name="racist"
                 color="primary"
               />
@@ -211,7 +225,9 @@ function Home(props) {
             control={
               <Checkbox
                 checked={flags.sexist}
-                onChange={changeFlags}
+                onChange={() =>
+                  dispatchBlacklist({ type: "TOGGLE", name: "sexist" })
+                }
                 name="sexist"
                 color="primary"
               />
@@ -226,7 +242,7 @@ function Home(props) {
           variant="contained"
           onClick={() => {
             resetCategories();
-            resetFlags();
+            dispatchBlacklist({ type: "RESET" });
             resetTerm();
           }}
         >

@@ -19,7 +19,7 @@ function JokeList() {
   const [isLoading, setIsLoading] = useState(true);
   const [jokes, setJokes] = useState([]);
 
-  const { flags } = useContext(BlacklistContext);
+  const flags = useContext(BlacklistContext);
   const { categories } = useContext(CategoryContext);
   const { term } = useContext(SearchContext);
 

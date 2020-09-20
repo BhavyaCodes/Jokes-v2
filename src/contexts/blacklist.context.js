@@ -1,9 +1,11 @@
-import React, { useState, createContext } from "react";
+import React, { useReducer, createContext } from "react";
+import blacklistReducer from "../reducers/blacklist.reducer";
 
 export const BlacklistContext = createContext();
+export const DispatchBlacklistContext = createContext();
 
 export function BlacklistProvider(props) {
-  const [flags, setFlags] = useState({
+  const [flags, dispatch] = useReducer(blacklistReducer, {
     nsfw: false,
     religious: false,
     political: false,
@@ -11,28 +13,11 @@ export function BlacklistProvider(props) {
     sexist: false,
   });
 
-  const changeFlags = (e) => {
-    setFlags({
-      ...flags,
-      [e.target.name]: !flags[e.target.name],
-    });
-  };
-
-  const resetFlags = () => {
-    setFlags({
-      nsfw: false,
-      religious: false,
-      political: false,
-      racist: false,
-      sexist: false,
-    });
-  };
-
   return (
-    <BlacklistContext.Provider
-      value={{ flags, changeFlags, resetFlags, setFlags }}
-    >
-      {props.children}
+    <BlacklistContext.Provider value={flags}>
+      <DispatchBlacklistContext.Provider value={dispatch}>
+        {props.children}
+      </DispatchBlacklistContext.Provider>
     </BlacklistContext.Provider>
   );
 }
