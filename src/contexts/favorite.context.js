@@ -1,45 +1,28 @@
 import React, { createContext } from "react";
-import useLocalStorageStage from "../hooks/useLocalStorageState";
+// import useLocalStorageStage from "../hooks/useLocalStorageState";
+import useLocalStorageReducer from "../hooks/useLocalStorageReducer";
+import favoriteReducer from "../reducers/favorite.reducer";
 
 export const FavoriteContext = createContext();
+export const DispatchFavoriteContext = createContext();
 
 export function FavoriteProvider(props) {
-  const [favoritesId, setFavoritesId] = useLocalStorageStage("favoritesId", []);
-  const [favoriteJokes, setFavoriteJokes] = useLocalStorageStage(
+  const [favoritesId, dispatchId] = useLocalStorageReducer(
+    "favoritesId",
+    [],
+    favoriteReducer
+  );
+  const [favoriteJokes, dispatchJoke] = useLocalStorageReducer(
     "favoriteJokes",
-    []
+    [],
+    favoriteReducer
   );
 
-  const addFavoriteJoke = (joke) => {
-    setFavoriteJokes([joke, ...favoriteJokes]);
-    addFavoriteId(joke.id);
-  };
-
-  const removeFavoriteJoke = (id) => {
-    setFavoriteJokes(favoriteJokes.filter((joke) => joke.id !== id));
-    removeFavoriteId(id);
-  };
-
-  const addFavoriteId = (id) => {
-    setFavoritesId([id, ...favoritesId]);
-  };
-
-  const removeFavoriteId = (idToRemove) => {
-    const updatedFavorites = favoritesId.filter((id) => id !== idToRemove);
-    setFavoritesId(updatedFavorites);
-  };
-
   return (
-    <FavoriteContext.Provider
-      value={{
-        favoritesId,
-        setFavoritesId,
-        addFavoriteJoke,
-        removeFavoriteJoke,
-        favoriteJokes,
-      }}
-    >
-      {props.children}
+    <FavoriteContext.Provider value={{ favoritesId, favoriteJokes }}>
+      <DispatchFavoriteContext.Provider value={{ dispatchId, dispatchJoke }}>
+        {props.children}
+      </DispatchFavoriteContext.Provider>
     </FavoriteContext.Provider>
   );
 }

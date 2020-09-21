@@ -18,7 +18,7 @@ function JokeList() {
     <div className={classes.root}>
       <Grid container spacing={3}>
         {favoriteJokes.map((joke) => (
-          <Grid item sm={12} md={6} className={classes.gridItem}>
+          <Grid key={joke.id} item sm={12} md={6} className={classes.gridItem}>
             {joke.type === "single" ? (
               <SingleJoke joke={joke} />
             ) : (
