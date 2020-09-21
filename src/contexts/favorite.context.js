@@ -1,5 +1,4 @@
 import React, { createContext } from "react";
-// import useLocalStorageStage from "../hooks/useLocalStorageState";
 import useLocalStorageReducer from "../hooks/useLocalStorageReducer";
 import favoriteReducer from "../reducers/favorite.reducer";
 

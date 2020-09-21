@@ -1,5 +1,3 @@
-import { red } from "@material-ui/core/colors";
-
 const reducer = (state, action) => {
   switch (action.type) {
     case "ALL": {
