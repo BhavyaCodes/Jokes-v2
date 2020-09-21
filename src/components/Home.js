@@ -1,4 +1,4 @@
-import React, { useContext, useReducer } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 import AppBar from "@material-ui/core/AppBar";
@@ -9,13 +9,9 @@ import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import Fab from "@material-ui/core/Fab";
-import RefreshIcon from "@material-ui/icons/Refresh";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import Tooltip from "@material-ui/core/Tooltip";
-
-import { DispatchBlacklistContext } from "../contexts/blacklist.context";
 
 import Drawer from "./Drawer";
 import JokeList from "./JokeList";
@@ -25,9 +21,7 @@ import logo from "../images/logo512.png";
 import useStyles from "../styles/HomeStyles";
 
 function Home(props) {
-  // const dispatchBlacklist = useContext(DispatchBlacklistContext);
   const { window } = props;
-  // const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const location = props.location.pathname;
@@ -39,11 +33,6 @@ function Home(props) {
   const handleDrawerClose = () => {
     setMobileOpen(false);
   };
-
-  // const refresh = () => {
-  //   // dispatchBlacklist({ type: "RESET" });
-  //   forceUpdate();
-  // };
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -140,18 +129,6 @@ function Home(props) {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           {location === "/favorites" ? <FavoriteJokeList /> : <JokeList />}
-          {/*location === "/favorites" ? null : (
-            <Tooltip title="Refresh Jokes">
-              <Fab
-                color="secondary"
-                aria-label="refresh"
-                className={classes.refreshButton}
-                onClick={refresh}
-              >
-                <RefreshIcon />
-              </Fab>
-            </Tooltip>
-          )*/}
         </main>
         <Footer />
       </div>

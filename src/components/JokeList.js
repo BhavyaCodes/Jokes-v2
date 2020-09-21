@@ -80,18 +80,18 @@ function JokeList() {
       }
     };
     getJokes();
-  }, [debouncedInfo]);
+  }, [debouncedInfo, ignored]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (!isLoading) {
         setDebouncedInfo({ flags, categories, term });
       }
-    }, 400);
+    }, 500);
     return () => {
       clearInterval(timeoutId);
     };
-  }, [flags, categories, term, ignored]);
+  }, [flags, categories, term]);
 
   console.log("JokeList");
   return (
@@ -122,16 +122,18 @@ function JokeList() {
               )}
             </Grid>
           ))}
-          <Tooltip title="Refresh Jokes">
-            <Fab
-              color="secondary"
-              aria-label="refresh"
-              className={classes.refreshButton}
-              onClick={refresh}
-            >
-              <RefreshIcon />
-            </Fab>
-          </Tooltip>
+          {isLoading ? null : (
+            <Tooltip title="Refresh Jokes">
+              <Fab
+                color="secondary"
+                aria-label="refresh"
+                className={classes.refreshButton}
+                onClick={refresh}
+              >
+                <RefreshIcon />
+              </Fab>
+            </Tooltip>
+          )}
         </Grid>
       ) : (
         <h2>No jokes found!! try updating your filters</h2>
