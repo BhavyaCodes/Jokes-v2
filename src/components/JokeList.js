@@ -70,9 +70,9 @@ function JokeList() {
         if (response.data.error) {
           setError(true);
         } else {
+          setIsLoading(false);
           setJokes(response.data.jokes);
           setError(false);
-          setIsLoading(false);
         }
       } catch (error) {
         setError(true);
