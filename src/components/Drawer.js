@@ -27,11 +27,9 @@ function Drawer({ handleDrawerClose }) {
   const dispatchFilters = useContext(DispatchFiltersContext);
 
   const [debouncedFilters] = useDebouncedState(filters, 1000);
-  console.log(filters);
 
   useEffect(() => {
     dispatchFilters({ type: "UPDATE", filters: debouncedFilters });
-    console.log("dispatch");
   }, [debouncedFilters, dispatchFilters]);
 
   const handleSearch = (e) => {
@@ -85,6 +83,7 @@ function Drawer({ handleDrawerClose }) {
   };
 
   const classes = useStyles();
+  console.log("Drawer");
   return (
     <div>
       <div className={classes.toolbar}>

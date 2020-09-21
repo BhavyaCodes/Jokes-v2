@@ -52,6 +52,13 @@ export default makeStyles((theme) => ({
   formGroup: {
     marginLeft: theme.spacing(2),
   },
+  boxContainer: {
+    paddingTop: theme.spacing(1),
+    paddingBottom: theme.spacing(1),
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
   resetButton: {
     width: "90%",
   },

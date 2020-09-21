@@ -39,13 +39,6 @@ export default makeStyles((theme) => ({
     minHeight: "100vh",
     backgroundColor: theme.palette.grey[200],
   },
-  boxContainer: {
-    paddingTop: theme.spacing(1),
-    paddingBottom: theme.spacing(1),
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
   logoAndName: {
     display: "flex",
     "& a": {
