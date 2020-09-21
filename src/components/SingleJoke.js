@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, memo } from "react";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -116,4 +116,4 @@ function SingleJoke({ joke }) {
   );
 }
 
-export default SingleJoke;
+export default memo(SingleJoke);
