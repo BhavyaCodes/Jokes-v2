@@ -1,6 +1,9 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useReducer } from "react";
 
 import Grid from "@material-ui/core/Grid";
+import Fab from "@material-ui/core/Fab";
+import RefreshIcon from "@material-ui/icons/Refresh";
+import Tooltip from "@material-ui/core/Tooltip";
 
 import { CategoryContext } from "../contexts/category.context";
 import { BlacklistContext } from "../contexts/blacklist.context";
@@ -15,6 +18,7 @@ import useStyles from "../styles/JokeListStyles";
 
 function JokeList() {
   const classes = useStyles();
+  const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [jokes, setJokes] = useState([]);
@@ -28,6 +32,10 @@ function JokeList() {
     categories,
     term,
   });
+
+  const refresh = () => {
+    forceUpdate();
+  };
 
   useEffect(() => {
     const getJokes = async () => {
@@ -83,7 +91,7 @@ function JokeList() {
     return () => {
       clearInterval(timeoutId);
     };
-  }, [flags, categories, term]);
+  }, [flags, categories, term, ignored]);
 
   console.log("JokeList");
   return (
@@ -114,6 +122,16 @@ function JokeList() {
               )}
             </Grid>
           ))}
+          <Tooltip title="Refresh Jokes">
+            <Fab
+              color="secondary"
+              aria-label="refresh"
+              className={classes.refreshButton}
+              onClick={refresh}
+            >
+              <RefreshIcon />
+            </Fab>
+          </Tooltip>
         </Grid>
       ) : (
         <h2>No jokes found!! try updating your filters</h2>

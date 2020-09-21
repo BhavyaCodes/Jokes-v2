@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useReducer } from "react";
 import { Link } from "react-router-dom";
 
 import AppBar from "@material-ui/core/AppBar";
@@ -25,12 +25,11 @@ import logo from "../images/logo512.png";
 import useStyles from "../styles/HomeStyles";
 
 function Home(props) {
-  const dispatchBlacklist = useContext(DispatchBlacklistContext);
-
+  // const dispatchBlacklist = useContext(DispatchBlacklistContext);
   const { window } = props;
+  // const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-
   const location = props.location.pathname;
 
   const handleDrawerToggle = () => {
@@ -41,9 +40,10 @@ function Home(props) {
     setMobileOpen(false);
   };
 
-  const refresh = () => {
-    dispatchBlacklist({ type: "RESET" });
-  };
+  // const refresh = () => {
+  //   // dispatchBlacklist({ type: "RESET" });
+  //   forceUpdate();
+  // };
 
   const container =
     window !== undefined ? () => window().document.body : undefined;
@@ -140,7 +140,7 @@ function Home(props) {
         <main className={classes.content}>
           <div className={classes.toolbar} />
           {location === "/favorites" ? <FavoriteJokeList /> : <JokeList />}
-          {location === "/favorites" ? null : (
+          {/*location === "/favorites" ? null : (
             <Tooltip title="Refresh Jokes">
               <Fab
                 color="secondary"
@@ -151,7 +151,7 @@ function Home(props) {
                 <RefreshIcon />
               </Fab>
             </Tooltip>
-          )}
+          )*/}
         </main>
         <Footer />
       </div>

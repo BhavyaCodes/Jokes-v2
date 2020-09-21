@@ -66,12 +66,6 @@ export default makeStyles((theme) => ({
       color: "white",
     },
   },
-  refreshButton: {
-    position: "fixed",
-    right: theme.spacing(3),
-    bottom: theme.spacing(3),
-  },
-
   appBarIconsRight: {
     margin: "auto",
     marginRight: 0,
