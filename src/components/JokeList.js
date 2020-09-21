@@ -85,6 +85,7 @@ function JokeList() {
     };
   }, [flags, categories, term]);
 
+  console.log("JokeList");
   return (
     <div className={classes.root}>
       {isLoading ? (

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, memo } from "react";
 
 import Grid from "@material-ui/core/Grid";
 
@@ -13,7 +13,7 @@ function JokeList() {
   const classes = useStyles();
 
   const { favoriteJokes } = useContext(FavoriteContext);
-
+  console.log("FavoriteJokeList");
   return (
     <div className={classes.root}>
       <Grid container spacing={3}>
@@ -31,4 +31,4 @@ function JokeList() {
   );
 }
 
-export default JokeList;
+export default memo(JokeList);

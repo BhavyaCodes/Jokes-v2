@@ -5,6 +5,7 @@ import useStyles from "../styles/ChipsStyles";
 
 function Chips({ category, flags }) {
   const classes = useStyles();
+  console.log("Chips");
   return (
     <div className={classes.root}>
       <Chip

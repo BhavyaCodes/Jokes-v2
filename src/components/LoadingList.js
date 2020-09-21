@@ -5,6 +5,7 @@ import useStyles from "../styles/LoadingListStyles";
 
 export default function LoadingList() {
   const classes = useStyles();
+  console.log("LoadingList");
   return (
     <div className={classes.root}>
       <Skeleton

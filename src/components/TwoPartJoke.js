@@ -51,6 +51,7 @@ function SingleJoke({ joke }) {
     }
   };
 
+  console.log("TwoPartJoke");
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
