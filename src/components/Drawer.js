@@ -26,7 +26,7 @@ import {
   DispatchSearchContext,
 } from "../contexts/search.context";
 
-import useStyles from "../styles/HomeStyles";
+import useStyles from "../styles/DrawerStyles";
 
 function Drawer({ handleDrawerClose }) {
   const categories = useContext(CategoryContext);
