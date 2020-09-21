@@ -1,10 +1,11 @@
 import React from "react";
 import Skeleton from "@material-ui/lab/Skeleton";
 
-import useStyles from "../styles/LoadingListStyles";
+import useStyles from "../styles/LoadingJokeStyles";
 
-export default function LoadingList() {
+export default function LoadingJoke() {
   const classes = useStyles();
+  console.log("LoadingJoke");
   return (
     <div className={classes.root}>
       <Skeleton

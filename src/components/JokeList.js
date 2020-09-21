@@ -1,53 +1,50 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useReducer } from "react";
 
 import Grid from "@material-ui/core/Grid";
+import Fab from "@material-ui/core/Fab";
+import RefreshIcon from "@material-ui/icons/Refresh";
+import Tooltip from "@material-ui/core/Tooltip";
 
-import { CategoryContext } from "../contexts/CategoryContext";
-import { BlacklistContext } from "../contexts/BlacklistContext";
-import { SearchContext } from "../contexts/SearchContext";
+import { FiltersContext } from "../contexts/filters.context";
 
 import jokesApi from "../api/jokesApi";
 
 import SingleJoke from "./SingleJoke";
 import TwoPartJoke from "./TwoPartJoke";
-import LoadingList from "./LoadingList";
+import LoadingJoke from "./LoadingJoke";
 import useStyles from "../styles/JokeListStyles";
 
 function JokeList() {
   const classes = useStyles();
+  const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [jokes, setJokes] = useState([]);
 
-  const { flags } = useContext(BlacklistContext);
-  const { categories } = useContext(CategoryContext);
-  const { term } = useContext(SearchContext);
+  const filters = useContext(FiltersContext);
 
-  const [debouncedInfo, setDebouncedInfo] = useState({
-    flags,
-    categories,
-    term,
-  });
+  const refresh = () => {
+    forceUpdate();
+  };
 
   useEffect(() => {
     const getJokes = async () => {
-      console.log(debouncedInfo);
       let categoryString = "";
       let flagString = "";
 
-      if (debouncedInfo.categories.all) {
+      if (filters.categories.all) {
         categoryString = "any";
       } else {
-        for (const key in debouncedInfo.categories) {
-          if (debouncedInfo.categories[key]) {
+        for (const key in filters.categories) {
+          if (filters.categories[key]) {
             categoryString += key.toString() + ",";
           }
         }
         categoryString = categoryString.slice(0, -1);
       }
 
-      for (const key in debouncedInfo.flags) {
-        if (debouncedInfo.flags[key]) {
+      for (const key in filters.blacklist) {
+        if (filters.blacklist[key]) {
           flagString += key.toString() + ",";
         }
       }
@@ -57,15 +54,15 @@ function JokeList() {
         const response = await jokesApi.get(`/${categoryString}?amount=6`, {
           params: {
             blacklistFlags: flagString || undefined,
-            contains: debouncedInfo.term || undefined,
+            contains: filters.term || undefined,
           },
         });
         if (response.data.error) {
           setError(true);
         } else {
+          setIsLoading(false);
           setJokes(response.data.jokes);
           setError(false);
-          setIsLoading(false);
         }
       } catch (error) {
         setError(true);
@@ -73,26 +70,15 @@ function JokeList() {
       }
     };
     getJokes();
-  }, [debouncedInfo]);
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (!isLoading) {
-        setDebouncedInfo({ flags, categories, term });
-      }
-    }, 400);
-    return () => {
-      clearInterval(timeoutId);
-    };
-  }, [flags, categories, term]);
+  }, [filters, ignored]);
 
   return (
     <div className={classes.root}>
       {isLoading ? (
         <Grid container spacing={3}>
-          {Array.from({ length: 6 }).map((i) => (
-            <Grid item sm={12} md={6} className={classes.gridItem}>
-              <LoadingList />
+          {Array.from({ length: 6 }).map((i, index) => (
+            <Grid key={index} item sm={12} md={6} className={classes.gridItem}>
+              <LoadingJoke />
             </Grid>
           ))}
         </Grid>
@@ -100,7 +86,13 @@ function JokeList() {
       {jokes && !error ? (
         <Grid container spacing={3}>
           {jokes.map((joke) => (
-            <Grid item sm={12} md={6} className={classes.gridItem}>
+            <Grid
+              key={joke.id}
+              item
+              sm={12}
+              md={6}
+              className={classes.gridItem}
+            >
               {joke.type === "single" ? (
                 <SingleJoke joke={joke} />
               ) : (
@@ -108,6 +100,18 @@ function JokeList() {
               )}
             </Grid>
           ))}
+          {isLoading ? null : (
+            <Tooltip title="Refresh Jokes">
+              <Fab
+                color="secondary"
+                aria-label="refresh"
+                className={classes.refreshButton}
+                onClick={refresh}
+              >
+                <RefreshIcon />
+              </Fab>
+            </Tooltip>
+          )}
         </Grid>
       ) : (
         <h2>No jokes found!! try updating your filters</h2>

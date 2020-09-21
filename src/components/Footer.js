@@ -9,6 +9,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 
 import useStyles from "../styles/FooterStyles";
 
+console.log("Footer");
 function Footer() {
   const classes = useStyles();
   return (

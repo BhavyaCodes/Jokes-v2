@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, memo } from "react";
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -16,7 +16,10 @@ import Tooltip from "@material-ui/core/Tooltip";
 
 import Chips from "./Chips";
 
-import { FavoriteContext } from "../contexts/FavoriteContext";
+import {
+  FavoriteContext,
+  DispatchFavoriteContext,
+} from "../contexts/favorite.context";
 import useStyles from "../styles/SingleJokeStyles";
 
 function SingleJoke({ joke }) {
@@ -29,9 +32,8 @@ function SingleJoke({ joke }) {
   };
 
   const classes = useStyles();
-  const { favoritesId, addFavoriteJoke, removeFavoriteJoke } = useContext(
-    FavoriteContext
-  );
+  const { favoritesId } = useContext(FavoriteContext);
+  const { dispatchId, dispatchJoke } = useContext(DispatchFavoriteContext);
 
   const checkFavorite = (id) => {
     return favoritesId.includes(id);
@@ -40,13 +42,16 @@ function SingleJoke({ joke }) {
   const handleChange = (e) => {
     if (e.target.checked) {
       setOpenSnackbar(true);
-      addFavoriteJoke(joke);
+      dispatchJoke({ type: "ADD_JOKE", joke });
+      dispatchId({ type: "ADD_ID", jokeId: joke.id });
     }
     if (e.target.checked === false) {
-      removeFavoriteJoke(joke.id);
+      dispatchJoke({ type: "REMOVE_JOKE", jokeId: joke.id });
+      dispatchId({ type: "REMOVE_ID", jokeId: joke.id });
     }
   };
 
+  console.log("SingleJoke");
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
@@ -111,4 +116,4 @@ function SingleJoke({ joke }) {
   );
 }
 
-export default SingleJoke;
+export default memo(SingleJoke);

@@ -5,6 +5,7 @@ import useStyles from "../styles/ChipsStyles";
 
 function Chips({ category, flags }) {
   const classes = useStyles();
+  console.log("Chips");
   return (
     <div className={classes.root}>
       <Chip
@@ -13,7 +14,7 @@ function Chips({ category, flags }) {
         label={category}
       />
       {Object.keys(flags).map((key) => (
-        <>
+        <React.Fragment key={key}>
           {flags[key] ? (
             <Chip
               className={`${classes[`${key}`]} ${classes.chip} `}
@@ -21,7 +22,7 @@ function Chips({ category, flags }) {
               label={key.toString()}
             />
           ) : null}
-        </>
+        </React.Fragment>
       ))}
     </div>
   );
