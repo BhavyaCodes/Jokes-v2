@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
@@ -25,31 +25,93 @@ import {
   SearchContext,
   DispatchSearchContext,
 } from "../contexts/search.context";
+import {
+  FiltersContext,
+  DispatchFiltersContext,
+} from "../contexts/filters.context";
+
+import useDebouncedState from "../hooks/useDebouncedState";
 
 import useStyles from "../styles/DrawerStyles";
 
 function Drawer({ handleDrawerClose }) {
-  const categories = useContext(CategoryContext);
-  const dispatchCategory = useContext(DispatchCategoryContext);
-  const flags = useContext(BlacklistContext);
-  const dispatchBlacklist = useContext(DispatchBlacklistContext);
-  const term = useContext(SearchContext);
-  const dispatchSearch = useContext(DispatchSearchContext);
+  // const categories = useContext(CategoryContext);
+  // const dispatchCategory = useContext(DispatchCategoryContext);
+  // const flags = useContext(BlacklistContext);
+  // const dispatchBlacklist = useContext(DispatchBlacklistContext);
+  // const [term, setTerm] = useState(useContext(FiltersContext).search);
+  // const dispatchSearch = useContext(DispatchSearchContext);
+  const [filters, setFilters] = useState(useContext(FiltersContext));
+  const dispatchFilters = useContext(DispatchFiltersContext);
+
+  const [debouncedFilters] = useDebouncedState(filters, 1000);
+  console.log(filters);
+
+  // useEffect(() => {
+  //   dispatchSearch({ type: "UPDATE", filters: debouncedFilters });
+  //   console.log("debounceUseEffect");
+  // }, [debouncedFilters, dispatchSearch]);
+
+  useEffect(() => {
+    dispatchFilters({ type: "UPDATE", filters: debouncedFilters });
+    console.log("dispatch");
+  }, [debouncedFilters, dispatchFilters]);
 
   const handleSearch = (e) => {
-    dispatchSearch({ type: "UPDATE", term: e.target.value });
+    // setTerm(e.target.value);
+    setFilters({ ...filters, term: e.target.value });
   };
+
   const handleCategoryChange = (e) => {
     if (e.target.name === "all") {
-      dispatchCategory({ type: "ALL" });
+      // dispatchCategory({ type: "ALL" });
+      setFilters({
+        ...filters,
+        categories: {
+          all: true,
+          programming: false,
+          miscellaneous: false,
+          dark: false,
+          pun: false,
+        },
+      });
     } else {
-      dispatchCategory({ type: "TOGGLE_CHECKBOX", name: e.target.name });
+      // dispatchCategory({ type: "TOGGLE_CHECKBOX", name: e.target.name });
+      const updatedFilters = { ...filters };
+      updatedFilters.categories[e.target.name] = e.target.checked;
+      updatedFilters.categories.all = false;
+      setFilters(updatedFilters);
     }
   };
 
   const handleBlacklistChange = (e) => {
-    dispatchBlacklist({ type: "TOGGLE", name: e.target.name });
+    // dispatchBlacklist({ type: "TOGGLE", name: e.target.name });
+    const updatedFilters = { ...filters };
+    updatedFilters.blacklist[e.target.name] = e.target.checked;
+    setFilters(updatedFilters);
   };
+
+  const handleResetFilters = (e) => {
+    setFilters({
+      term: "",
+      categories: {
+        all: true,
+        programming: false,
+        miscellaneous: false,
+        dark: false,
+        pun: false,
+      },
+      blacklist: {
+        nsfw: false,
+        religious: false,
+        political: false,
+        racist: false,
+        sexist: false,
+      },
+    });
+    // dispatchFilters({ type: "RESET" });
+  };
+
   const classes = useStyles();
   return (
     <div>
@@ -73,7 +135,7 @@ function Drawer({ handleDrawerClose }) {
         </div>
         <InputBase
           onChange={handleSearch}
-          value={term}
+          value={filters.term}
           placeholder="search..."
           classes={{
             root: classes.inputRoot,
@@ -91,7 +153,7 @@ function Drawer({ handleDrawerClose }) {
             control={
               <Radio
                 color="primary"
-                checked={categories.all}
+                checked={filters.categories.all}
                 name="all"
                 onChange={handleCategoryChange}
               />
@@ -101,7 +163,7 @@ function Drawer({ handleDrawerClose }) {
           <FormControlLabel
             control={
               <Checkbox
-                checked={categories.programming}
+                checked={filters.categories.programming}
                 onChange={handleCategoryChange}
                 name="programming"
                 color="primary"
@@ -112,7 +174,7 @@ function Drawer({ handleDrawerClose }) {
           <FormControlLabel
             control={
               <Checkbox
-                checked={categories.miscellaneous}
+                checked={filters.categories.miscellaneous}
                 onChange={handleCategoryChange}
                 name="miscellaneous"
                 color="primary"
@@ -123,7 +185,7 @@ function Drawer({ handleDrawerClose }) {
           <FormControlLabel
             control={
               <Checkbox
-                checked={categories.dark}
+                checked={filters.categories.dark}
                 onChange={handleCategoryChange}
                 name="dark"
                 color="primary"
@@ -134,7 +196,7 @@ function Drawer({ handleDrawerClose }) {
           <FormControlLabel
             control={
               <Checkbox
-                checked={categories.pun}
+                checked={filters.categories.pun}
                 onChange={handleCategoryChange}
                 name="pun"
                 color="primary"
@@ -153,7 +215,7 @@ function Drawer({ handleDrawerClose }) {
           <FormControlLabel
             control={
               <Checkbox
-                checked={flags.nsfw}
+                checked={filters.blacklist.nsfw}
                 onChange={handleBlacklistChange}
                 name="nsfw"
                 color="primary"
@@ -164,7 +226,7 @@ function Drawer({ handleDrawerClose }) {
           <FormControlLabel
             control={
               <Checkbox
-                checked={flags.religious}
+                checked={filters.blacklist.religious}
                 onChange={handleBlacklistChange}
                 name="religious"
                 color="primary"
@@ -175,7 +237,7 @@ function Drawer({ handleDrawerClose }) {
           <FormControlLabel
             control={
               <Checkbox
-                checked={flags.political}
+                checked={filters.blacklist.political}
                 onChange={handleBlacklistChange}
                 name="political"
                 color="primary"
@@ -186,7 +248,7 @@ function Drawer({ handleDrawerClose }) {
           <FormControlLabel
             control={
               <Checkbox
-                checked={flags.racist}
+                checked={filters.blacklist.racist}
                 onChange={handleBlacklistChange}
                 name="racist"
                 color="primary"
@@ -197,7 +259,7 @@ function Drawer({ handleDrawerClose }) {
           <FormControlLabel
             control={
               <Checkbox
-                checked={flags.sexist}
+                checked={filters.blacklist.sexist}
                 onChange={handleBlacklistChange}
                 name="sexist"
                 color="primary"
@@ -211,11 +273,7 @@ function Drawer({ handleDrawerClose }) {
         <Button
           className={classes.resetButton}
           variant="contained"
-          onClick={() => {
-            dispatchCategory({ type: "RESET" });
-            dispatchBlacklist({ type: "RESET" });
-            dispatchSearch({ type: "RESET" });
-          }}
+          onClick={handleResetFilters}
         >
           Reset filters
         </Button>

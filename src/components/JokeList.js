@@ -8,6 +8,7 @@ import Tooltip from "@material-ui/core/Tooltip";
 import { CategoryContext } from "../contexts/category.context";
 import { BlacklistContext } from "../contexts/blacklist.context";
 import { SearchContext } from "../contexts/search.context";
+import { FiltersContext } from "../contexts/filters.context";
 
 import jokesApi from "../api/jokesApi";
 
@@ -26,12 +27,7 @@ function JokeList() {
   const flags = useContext(BlacklistContext);
   const categories = useContext(CategoryContext);
   const term = useContext(SearchContext);
-
-  const [debouncedInfo, setDebouncedInfo] = useState({
-    flags,
-    categories,
-    term,
-  });
+  const filters = useContext(FiltersContext);
 
   const refresh = () => {
     forceUpdate();
@@ -42,19 +38,19 @@ function JokeList() {
       let categoryString = "";
       let flagString = "";
 
-      if (debouncedInfo.categories.all) {
+      if (filters.categories.all) {
         categoryString = "any";
       } else {
-        for (const key in debouncedInfo.categories) {
-          if (debouncedInfo.categories[key]) {
+        for (const key in filters.categories) {
+          if (filters.categories[key]) {
             categoryString += key.toString() + ",";
           }
         }
         categoryString = categoryString.slice(0, -1);
       }
 
-      for (const key in debouncedInfo.flags) {
-        if (debouncedInfo.flags[key]) {
+      for (const key in filters.blacklist) {
+        if (filters.blacklist[key]) {
           flagString += key.toString() + ",";
         }
       }
@@ -64,7 +60,7 @@ function JokeList() {
         const response = await jokesApi.get(`/${categoryString}?amount=6`, {
           params: {
             blacklistFlags: flagString || undefined,
-            contains: debouncedInfo.term || undefined,
+            contains: filters.term || undefined,
           },
         });
         if (response.data.error) {
@@ -80,20 +76,8 @@ function JokeList() {
       }
     };
     getJokes();
-  }, [debouncedInfo, ignored]);
+  }, [filters, ignored]);
 
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (!isLoading) {
-        setDebouncedInfo({ flags, categories, term });
-      }
-    }, 500);
-    return () => {
-      clearInterval(timeoutId);
-    };
-  }, [flags, categories, term]);
-
-  console.log("JokeList");
   return (
     <div className={classes.root}>
       {isLoading ? (
