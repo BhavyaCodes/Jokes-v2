@@ -13,7 +13,7 @@ import jokesApi from "../api/jokesApi";
 
 import SingleJoke from "./SingleJoke";
 import TwoPartJoke from "./TwoPartJoke";
-import LoadingList from "./LoadingList";
+import LoadingJoke from "./LoadingJoke";
 import useStyles from "../styles/JokeListStyles";
 
 function JokeList() {
@@ -100,7 +100,7 @@ function JokeList() {
         <Grid container spacing={3}>
           {Array.from({ length: 6 }).map((i, index) => (
             <Grid key={index} item sm={12} md={6} className={classes.gridItem}>
-              <LoadingList />
+              <LoadingJoke />
             </Grid>
           ))}
         </Grid>
