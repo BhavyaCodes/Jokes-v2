@@ -14,18 +14,6 @@ import SearchIcon from "@material-ui/icons/Search";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
 import {
-  CategoryContext,
-  DispatchCategoryContext,
-} from "../contexts/category.context";
-import {
-  BlacklistContext,
-  DispatchBlacklistContext,
-} from "../contexts/blacklist.context";
-import {
-  SearchContext,
-  DispatchSearchContext,
-} from "../contexts/search.context";
-import {
   FiltersContext,
   DispatchFiltersContext,
 } from "../contexts/filters.context";
@@ -35,22 +23,11 @@ import useDebouncedState from "../hooks/useDebouncedState";
 import useStyles from "../styles/DrawerStyles";
 
 function Drawer({ handleDrawerClose }) {
-  // const categories = useContext(CategoryContext);
-  // const dispatchCategory = useContext(DispatchCategoryContext);
-  // const flags = useContext(BlacklistContext);
-  // const dispatchBlacklist = useContext(DispatchBlacklistContext);
-  // const [term, setTerm] = useState(useContext(FiltersContext).search);
-  // const dispatchSearch = useContext(DispatchSearchContext);
   const [filters, setFilters] = useState(useContext(FiltersContext));
   const dispatchFilters = useContext(DispatchFiltersContext);
 
   const [debouncedFilters] = useDebouncedState(filters, 1000);
   console.log(filters);
-
-  // useEffect(() => {
-  //   dispatchSearch({ type: "UPDATE", filters: debouncedFilters });
-  //   console.log("debounceUseEffect");
-  // }, [debouncedFilters, dispatchSearch]);
 
   useEffect(() => {
     dispatchFilters({ type: "UPDATE", filters: debouncedFilters });
@@ -58,13 +35,11 @@ function Drawer({ handleDrawerClose }) {
   }, [debouncedFilters, dispatchFilters]);
 
   const handleSearch = (e) => {
-    // setTerm(e.target.value);
     setFilters({ ...filters, term: e.target.value });
   };
 
   const handleCategoryChange = (e) => {
     if (e.target.name === "all") {
-      // dispatchCategory({ type: "ALL" });
       setFilters({
         ...filters,
         categories: {
@@ -76,7 +51,6 @@ function Drawer({ handleDrawerClose }) {
         },
       });
     } else {
-      // dispatchCategory({ type: "TOGGLE_CHECKBOX", name: e.target.name });
       const updatedFilters = { ...filters };
       updatedFilters.categories[e.target.name] = e.target.checked;
       updatedFilters.categories.all = false;
@@ -85,7 +59,6 @@ function Drawer({ handleDrawerClose }) {
   };
 
   const handleBlacklistChange = (e) => {
-    // dispatchBlacklist({ type: "TOGGLE", name: e.target.name });
     const updatedFilters = { ...filters };
     updatedFilters.blacklist[e.target.name] = e.target.checked;
     setFilters(updatedFilters);
@@ -109,7 +82,6 @@ function Drawer({ handleDrawerClose }) {
         sexist: false,
       },
     });
-    // dispatchFilters({ type: "RESET" });
   };
 
   const classes = useStyles();

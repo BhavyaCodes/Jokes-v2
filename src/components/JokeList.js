@@ -5,9 +5,6 @@ import Fab from "@material-ui/core/Fab";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import Tooltip from "@material-ui/core/Tooltip";
 
-import { CategoryContext } from "../contexts/category.context";
-import { BlacklistContext } from "../contexts/blacklist.context";
-import { SearchContext } from "../contexts/search.context";
 import { FiltersContext } from "../contexts/filters.context";
 
 import jokesApi from "../api/jokesApi";
@@ -24,9 +21,6 @@ function JokeList() {
   const [isLoading, setIsLoading] = useState(true);
   const [jokes, setJokes] = useState([]);
 
-  const flags = useContext(BlacklistContext);
-  const categories = useContext(CategoryContext);
-  const term = useContext(SearchContext);
   const filters = useContext(FiltersContext);
 
   const refresh = () => {
