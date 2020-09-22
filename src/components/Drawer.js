@@ -26,7 +26,7 @@ function Drawer({ handleDrawerClose }) {
   const [filters, setFilters] = useState(useContext(FiltersContext));
   const dispatchFilters = useContext(DispatchFiltersContext);
 
-  const [debouncedFilters] = useDebouncedState(filters, 1000);
+  const [debouncedFilters] = useDebouncedState(filters, 400);
 
   useEffect(() => {
     dispatchFilters({ type: "UPDATE", filters: debouncedFilters });
