@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 
 import { FavoriteProvider } from "../contexts/favorite.context";
 import { FiltersProvider } from "../contexts/filters.context";
-import Home from "./Navbar";
+import Navbar from "./Navbar";
 import FavoriteJokeList from "./FavoriteJokeList";
 import JokeList from "./JokeList";
 import Footer from "./Footer";
@@ -22,7 +22,7 @@ function App() {
               exact
               render={(routeProps) => (
                 <>
-                  <Home {...routeProps} />
+                  <Navbar {...routeProps} />
                   <div className={classes.contentWrapper}>
                     <main className={classes.content}>
                       <div className={classes.toolbar} />
@@ -38,7 +38,7 @@ function App() {
               exact
               render={(routeProps) => (
                 <>
-                  <Home {...routeProps} />
+                  <Navbar {...routeProps} />
                   <div className={classes.contentWrapper}>
                     <main className={classes.content}>
                       <div className={classes.toolbar} />

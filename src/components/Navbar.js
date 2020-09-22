@@ -22,6 +22,7 @@ function Home(props) {
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const location = props.location.pathname;
+  const disabledDrawer = location === "/" ? false : true;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -114,6 +115,7 @@ function Home(props) {
             <Drawer
               mobileOpen={mobileOpen}
               handleDrawerClose={handleDrawerClose}
+              disabledDrawer={disabledDrawer}
             />
           </SwipeableDrawer>
         </Hidden>
