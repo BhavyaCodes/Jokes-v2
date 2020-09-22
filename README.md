@@ -7,7 +7,7 @@
 - [x] Debounce api
 - [ ] add sharing functionality
 - [ ] add message when zero favorites on favorites page
-- [ ] fix filtering on favorites page
+- [x] fix filtering on favorites page
 - [ ] remove console.logs
 - [ ] fix keyboard not closing after searching
 

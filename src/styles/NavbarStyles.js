@@ -5,9 +5,6 @@ const drawerWidth = 300;
 export default makeStyles((theme) => ({
   root: {
     display: "flex",
-    "& a": {
-      color: "white",
-    },
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {

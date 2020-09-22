@@ -62,19 +62,27 @@ function Home(props) {
 
           <div className={classes.appBarIconsRight}>
             {location === "/favorites" ? (
-              <Link to="/">
-                <IconButton aria-label="view favorite jokes" color="inherit">
-                  <ArrowBackIcon />
-                </IconButton>
-              </Link>
+              <IconButton
+                aria-label="view favorite jokes"
+                color="inherit"
+                onClick={() => {
+                  props.history.push("/");
+                }}
+              >
+                <ArrowBackIcon />
+              </IconButton>
             ) : (
-              <Link to="/favorites">
-                <Tooltip title="Favorites">
-                  <IconButton aria-label="view favorite jokes" color="inherit">
-                    <FavoriteIcon />
-                  </IconButton>
-                </Tooltip>
-              </Link>
+              <Tooltip title="Favorites">
+                <IconButton
+                  aria-label="view favorite jokes"
+                  color="inherit"
+                  onClick={() => {
+                    props.history.push("/favorites");
+                  }}
+                >
+                  <FavoriteIcon />
+                </IconButton>
+              </Tooltip>
             )}
           </div>
         </Toolbar>
