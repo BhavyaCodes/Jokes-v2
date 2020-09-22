@@ -10,6 +10,7 @@
 - [x] fix filtering on favorites page
 - [ ] remove console.logs
 - [ ] fix keyboard not closing after searching
+- [x] fix overlapping refresh button
 
 ### Issues -
 
