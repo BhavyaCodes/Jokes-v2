@@ -14,17 +14,15 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import Tooltip from "@material-ui/core/Tooltip";
 
 import Drawer from "./Drawer";
-import JokeList from "./JokeList";
-import FavoriteJokeList from "./FavoriteJokeList";
-import Footer from "./Footer";
 import logo from "../images/logo512.png";
-import useStyles from "../styles/HomeStyles";
+import useStyles from "../styles/NavbarStyles";
 
 function Home(props) {
   const { window } = props;
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const location = props.location.pathname;
+  const disabledDrawer = location === "/" ? false : true;
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -67,7 +65,9 @@ function Home(props) {
               <IconButton
                 aria-label="view favorite jokes"
                 color="inherit"
-                onClick={() => props.history.push("/")}
+                onClick={() => {
+                  props.history.push("/");
+                }}
               >
                 <ArrowBackIcon />
               </IconButton>
@@ -76,7 +76,9 @@ function Home(props) {
                 <IconButton
                   aria-label="view favorite jokes"
                   color="inherit"
-                  onClick={() => props.history.push("/favorites")}
+                  onClick={() => {
+                    props.history.push("/favorites");
+                  }}
                 >
                   <FavoriteIcon />
                 </IconButton>
@@ -121,17 +123,11 @@ function Home(props) {
             <Drawer
               mobileOpen={mobileOpen}
               handleDrawerClose={handleDrawerClose}
+              disabledDrawer={disabledDrawer}
             />
           </SwipeableDrawer>
         </Hidden>
       </nav>
-      <div className={classes.contentWrapper}>
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-          {location === "/favorites" ? <FavoriteJokeList /> : <JokeList />}
-        </main>
-        <Footer />
-      </div>
     </div>
   );
 }

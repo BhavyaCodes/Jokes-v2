@@ -22,7 +22,7 @@ import useDebouncedState from "../hooks/useDebouncedState";
 
 import useStyles from "../styles/DrawerStyles";
 
-function Drawer({ handleDrawerClose }) {
+function Drawer({ handleDrawerClose, disabledDrawer }) {
   const [filters, setFilters] = useState(useContext(FiltersContext));
   const dispatchFilters = useContext(DispatchFiltersContext);
 
@@ -112,6 +112,7 @@ function Drawer({ handleDrawerClose }) {
             root: classes.inputRoot,
             input: classes.inputInput,
           }}
+          disabled={disabledDrawer}
         />
       </div>
       <Typography className={classes.subHeading} variant="h6">
@@ -127,6 +128,7 @@ function Drawer({ handleDrawerClose }) {
                 checked={filters.categories.all}
                 name="all"
                 onChange={handleCategoryChange}
+                disabled={disabledDrawer}
               />
             }
             label="All"
@@ -138,6 +140,7 @@ function Drawer({ handleDrawerClose }) {
                 onChange={handleCategoryChange}
                 name="programming"
                 color="primary"
+                disabled={disabledDrawer}
               />
             }
             label="Programming"
@@ -149,6 +152,7 @@ function Drawer({ handleDrawerClose }) {
                 onChange={handleCategoryChange}
                 name="miscellaneous"
                 color="primary"
+                disabled={disabledDrawer}
               />
             }
             label="Miscellaneous"
@@ -160,6 +164,7 @@ function Drawer({ handleDrawerClose }) {
                 onChange={handleCategoryChange}
                 name="dark"
                 color="primary"
+                disabled={disabledDrawer}
               />
             }
             label="Dark"
@@ -171,6 +176,7 @@ function Drawer({ handleDrawerClose }) {
                 onChange={handleCategoryChange}
                 name="pun"
                 color="primary"
+                disabled={disabledDrawer}
               />
             }
             label="Pun"
@@ -190,6 +196,7 @@ function Drawer({ handleDrawerClose }) {
                 onChange={handleBlacklistChange}
                 name="nsfw"
                 color="primary"
+                disabled={disabledDrawer}
               />
             }
             label="NSFW"
@@ -201,6 +208,7 @@ function Drawer({ handleDrawerClose }) {
                 onChange={handleBlacklistChange}
                 name="religious"
                 color="primary"
+                disabled={disabledDrawer}
               />
             }
             label="Religious"
@@ -212,6 +220,7 @@ function Drawer({ handleDrawerClose }) {
                 onChange={handleBlacklistChange}
                 name="political"
                 color="primary"
+                disabled={disabledDrawer}
               />
             }
             label="Political"
@@ -223,6 +232,7 @@ function Drawer({ handleDrawerClose }) {
                 onChange={handleBlacklistChange}
                 name="racist"
                 color="primary"
+                disabled={disabledDrawer}
               />
             }
             label="Racist"
@@ -234,6 +244,7 @@ function Drawer({ handleDrawerClose }) {
                 onChange={handleBlacklistChange}
                 name="sexist"
                 color="primary"
+                disabled={disabledDrawer}
               />
             }
             label="Sexist"
@@ -245,6 +256,7 @@ function Drawer({ handleDrawerClose }) {
           className={classes.resetButton}
           variant="contained"
           onClick={handleResetFilters}
+          disabled={disabledDrawer}
         >
           Reset filters
         </Button>

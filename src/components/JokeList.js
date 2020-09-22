@@ -28,6 +28,10 @@ function JokeList() {
   };
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [jokes]);
+
+  useEffect(() => {
     const getJokes = async () => {
       let categoryString = "";
       let flagString = "";
