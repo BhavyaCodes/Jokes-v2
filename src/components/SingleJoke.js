@@ -1,4 +1,6 @@
 import React, { useContext, memo } from "react";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -13,6 +15,11 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import Snackbar from "@material-ui/core/Snackbar";
 import CloseIcon from "@material-ui/icons/Close";
 import Tooltip from "@material-ui/core/Tooltip";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import LinkIcon from "@material-ui/icons/Link";
+import FileCopyIcon from "@material-ui/icons/FileCopy";
 
 import Chips from "./Chips";
 
@@ -23,6 +30,22 @@ import {
 import useStyles from "../styles/SingleJokeStyles";
 
 function SingleJoke({ joke }) {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleShareClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleShareClose = () => {
+    setAnchorEl(null);
+  };
+
+  const getJokeUrl = (joke) => {
+    const baseUrl = window.location.origin;
+    console.log(baseUrl);
+    return `${baseUrl}/joke/${joke.id}`;
+  };
+
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -79,10 +102,39 @@ function SingleJoke({ joke }) {
             />
           </Tooltip>
           <Tooltip title="Share">
-            <IconButton aria-label="share">
+            <IconButton
+              aria-label="share"
+              aria-controls="simple-menu"
+              aria-haspopup="true"
+              onClick={handleShareClick}
+            >
               <ShareIcon />
             </IconButton>
           </Tooltip>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleShareClose}
+          >
+            <CopyToClipboard text={getJokeUrl(joke)}>
+              <MenuItem onClick={handleShareClose}>
+                <ListItemIcon>
+                  <LinkIcon fontSize="small" />
+                </ListItemIcon>
+                Copy Link
+              </MenuItem>
+            </CopyToClipboard>
+            <CopyToClipboard text={joke.joke}>
+              <MenuItem onClick={handleShareClose}>
+                <ListItemIcon>
+                  <FileCopyIcon fontSize="small" />
+                </ListItemIcon>
+                Copy Joke
+              </MenuItem>
+            </CopyToClipboard>
+          </Menu>
         </CardActions>
       </div>
       <Snackbar

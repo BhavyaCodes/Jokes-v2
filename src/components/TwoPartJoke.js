@@ -39,6 +39,13 @@ function SingleJoke({ joke }) {
   const handleShareClose = () => {
     setAnchorEl(null);
   };
+
+  const getJokeUrl = (joke) => {
+    const baseUrl = window.location.origin;
+    console.log(baseUrl);
+    return `${baseUrl}/joke/${joke.id}`;
+  };
+
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -67,11 +74,6 @@ function SingleJoke({ joke }) {
     }
   };
 
-  const getJokeUrl = (joke) => {
-    const baseUrl = window.location.origin;
-    console.log(baseUrl);
-    return `${baseUrl}/joke/${joke.id}`;
-  };
   console.log("TwoPartJoke");
   return (
     <Card className={classes.root} variant="outlined">
