@@ -7,6 +7,7 @@ import Navbar from "./Navbar";
 import FavoriteJokeList from "./FavoriteJokeList";
 import JokeList from "./JokeList";
 import Footer from "./Footer";
+import ScrollToTop from "./ScrollToTop";
 
 import useStyles from "../styles/AppStyles";
 
@@ -15,6 +16,7 @@ function App() {
   return (
     <FavoriteProvider>
       <FiltersProvider>
+        <ScrollToTop />
         <div className={classes.root}>
           <Switch>
             <Route
