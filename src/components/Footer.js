@@ -17,7 +17,7 @@ function Footer() {
       <div className={classes.icons}>
         <Tooltip title="Github">
           <a
-            href="https://github.com/Juggernaut9"
+            href="https://github.com/Juggernaut9/Jokes-v2"
             target="_blank"
             rel="noreferrer noopener"
           >

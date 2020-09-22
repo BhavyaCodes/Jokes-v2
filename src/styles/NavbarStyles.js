@@ -5,6 +5,9 @@ const drawerWidth = 300;
 export default makeStyles((theme) => ({
   root: {
     display: "flex",
+    "& a": {
+      color: "white",
+    },
   },
   drawer: {
     [theme.breakpoints.up("sm")]: {
@@ -33,12 +36,6 @@ export default makeStyles((theme) => ({
   drawerPaper: {
     width: drawerWidth,
   },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    minHeight: "100vh",
-    backgroundColor: theme.palette.grey[200],
-  },
   logoAndName: {
     display: "flex",
     "& a": {
@@ -62,8 +59,5 @@ export default makeStyles((theme) => ({
   appBarIconsRight: {
     margin: "auto",
     marginRight: 0,
-  },
-  contentWrapper: {
-    width: "100%",
   },
 }));

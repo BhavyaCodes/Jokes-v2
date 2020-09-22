@@ -14,11 +14,8 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import Tooltip from "@material-ui/core/Tooltip";
 
 import Drawer from "./Drawer";
-import JokeList from "./JokeList";
-import FavoriteJokeList from "./FavoriteJokeList";
-import Footer from "./Footer";
 import logo from "../images/logo512.png";
-import useStyles from "../styles/HomeStyles";
+import useStyles from "../styles/NavbarStyles";
 
 function Home(props) {
   const { window } = props;
@@ -64,23 +61,19 @@ function Home(props) {
 
           <div className={classes.appBarIconsRight}>
             {location === "/favorites" ? (
-              <IconButton
-                aria-label="view favorite jokes"
-                color="inherit"
-                onClick={() => props.history.push("/")}
-              >
-                <ArrowBackIcon />
-              </IconButton>
-            ) : (
-              <Tooltip title="Favorites">
-                <IconButton
-                  aria-label="view favorite jokes"
-                  color="inherit"
-                  onClick={() => props.history.push("/favorites")}
-                >
-                  <FavoriteIcon />
+              <Link to="/">
+                <IconButton aria-label="view favorite jokes" color="inherit">
+                  <ArrowBackIcon />
                 </IconButton>
-              </Tooltip>
+              </Link>
+            ) : (
+              <Link to="/favorites">
+                <Tooltip title="Favorites">
+                  <IconButton aria-label="view favorite jokes" color="inherit">
+                    <FavoriteIcon />
+                  </IconButton>
+                </Tooltip>
+              </Link>
             )}
           </div>
         </Toolbar>
@@ -125,13 +118,6 @@ function Home(props) {
           </SwipeableDrawer>
         </Hidden>
       </nav>
-      <div className={classes.contentWrapper}>
-        <main className={classes.content}>
-          <div className={classes.toolbar} />
-          {location === "/favorites" ? <FavoriteJokeList /> : <JokeList />}
-        </main>
-        <Footer />
-      </div>
     </div>
   );
 }
