@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect, useReducer } from "react";
+import { Waypoint } from "react-waypoint";
 
 import Grid from "@material-ui/core/Grid";
 import Fab from "@material-ui/core/Fab";
@@ -20,6 +21,15 @@ function JokeList() {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [jokes, setJokes] = useState([]);
+  const [scrolledToBottom, setScrolledToBottom] = useState(false);
+
+  const handleScrollToBottomOnEnter = () => {
+    setScrolledToBottom(true);
+  };
+
+  const handleScrollToBottomOnLeave = () => {
+    setScrolledToBottom(false);
+  };
 
   const filters = useContext(FiltersContext);
 
@@ -109,7 +119,9 @@ function JokeList() {
               <Fab
                 color="secondary"
                 aria-label="refresh"
-                className={classes.refreshButton}
+                className={`${classes.refreshButton} ${
+                  scrolledToBottom && classes.scrolledToBottom
+                }`}
                 onClick={refresh}
               >
                 <RefreshIcon />
@@ -120,6 +132,10 @@ function JokeList() {
       ) : (
         <h2>No jokes found!! try updating your filters</h2>
       )}
+      <Waypoint
+        onEnter={handleScrollToBottomOnEnter}
+        onLeave={handleScrollToBottomOnLeave}
+      />
     </div>
   );
 }

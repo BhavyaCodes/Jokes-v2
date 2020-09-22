@@ -12,5 +12,9 @@ export default makeStyles((theme) => ({
     position: "fixed",
     right: theme.spacing(3),
     bottom: theme.spacing(3),
+    transition: "transform .1s ease-in-out",
+  },
+  scrolledToBottom: {
+    transform: "translateY(-48px)",
   },
 }));
