@@ -1,4 +1,4 @@
-import React, { useContext, memo } from "react";
+import React, { useContext, memo, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import Card from "@material-ui/core/Card";
@@ -36,17 +36,29 @@ function SingleJoke({ joke }) {
     setAnchorEl(event.currentTarget);
   };
 
+  const handleShareLink = () => {
+    setSnackbarText("Link Copied");
+    setOpenSnackbar(true);
+    setAnchorEl(null);
+  };
+
+  const handleShareJoke = () => {
+    setSnackbarText("Joke Copied");
+    setOpenSnackbar(true);
+    setAnchorEl(null);
+  };
+
   const handleShareClose = () => {
     setAnchorEl(null);
   };
 
   const getJokeUrl = (joke) => {
     const baseUrl = window.location.origin;
-    console.log(baseUrl);
     return `${baseUrl}/joke/${joke.id}`;
   };
 
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [snackbarText, setSnackbarText] = useState("abcd");
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -64,6 +76,7 @@ function SingleJoke({ joke }) {
 
   const handleChange = (e) => {
     if (e.target.checked) {
+      setSnackbarText("Added to favorites");
       setOpenSnackbar(true);
       dispatchJoke({ type: "ADD_JOKE", joke });
       dispatchId({ type: "ADD_ID", jokeId: joke.id });
@@ -119,7 +132,7 @@ function SingleJoke({ joke }) {
             onClose={handleShareClose}
           >
             <CopyToClipboard text={getJokeUrl(joke)}>
-              <MenuItem onClick={handleShareClose}>
+              <MenuItem onClick={handleShareLink}>
                 <ListItemIcon>
                   <LinkIcon fontSize="small" />
                 </ListItemIcon>
@@ -127,7 +140,7 @@ function SingleJoke({ joke }) {
               </MenuItem>
             </CopyToClipboard>
             <CopyToClipboard text={joke.joke}>
-              <MenuItem onClick={handleShareClose}>
+              <MenuItem onClick={handleShareJoke}>
                 <ListItemIcon>
                   <FileCopyIcon fontSize="small" />
                 </ListItemIcon>
@@ -147,8 +160,16 @@ function SingleJoke({ joke }) {
         onClose={handleClose}
         message={
           <div className={classes.SnackbarMessage}>
-            <FavoriteIcon color="secondary" />
-            <div className={classes.SnackbarText}>Added to favorites</div>
+            {(() => {
+              if (snackbarText === "Added to favorites") {
+                return <FavoriteIcon color="secondary" />;
+              } else if (snackbarText === "Link Copied") {
+                return <LinkIcon />;
+              } else {
+                return <FileCopyIcon />;
+              }
+            })()}
+            <div className={classes.SnackbarText}>{snackbarText}</div>
           </div>
         }
         action={
