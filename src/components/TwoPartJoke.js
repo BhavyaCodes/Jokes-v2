@@ -1,4 +1,6 @@
-import React, { useContext, memo } from "react";
+import React, { useContext, memo, useState } from "react";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+
 import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
@@ -13,6 +15,11 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import Snackbar from "@material-ui/core/Snackbar";
 import CloseIcon from "@material-ui/icons/Close";
 import Tooltip from "@material-ui/core/Tooltip";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import LinkIcon from "@material-ui/icons/Link";
+import FileCopyIcon from "@material-ui/icons/FileCopy";
 
 import Chips from "./Chips";
 
@@ -23,7 +30,35 @@ import {
 import useStyles from "../styles/TwoPartJokeStyles";
 
 function SingleJoke({ joke }) {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleShareClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleShareLink = () => {
+    setSnackbarText("Link Copied");
+    setOpenSnackbar(true);
+    setAnchorEl(null);
+  };
+
+  const handleShareJoke = () => {
+    setSnackbarText("Joke Copied");
+    setOpenSnackbar(true);
+    setAnchorEl(null);
+  };
+
+  const handleShareClose = () => {
+    setAnchorEl(null);
+  };
+
+  const getJokeUrl = (joke) => {
+    const baseUrl = window.location.origin;
+    return `${baseUrl}/joke/${joke.id}`;
+  };
+
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [snackbarText, setSnackbarText] = useState("abcd");
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -41,6 +76,7 @@ function SingleJoke({ joke }) {
 
   const handleChange = (e) => {
     if (e.target.checked) {
+      setSnackbarText("Added to favorites");
       setOpenSnackbar(true);
       dispatchJoke({ type: "ADD_JOKE", joke });
       dispatchId({ type: "ADD_ID", jokeId: joke.id });
@@ -83,10 +119,39 @@ function SingleJoke({ joke }) {
             />
           </Tooltip>
           <Tooltip title="Share">
-            <IconButton aria-label="share">
+            <IconButton
+              aria-label="share"
+              aria-controls="simple-menu"
+              aria-haspopup="true"
+              onClick={handleShareClick}
+            >
               <ShareIcon />
             </IconButton>
           </Tooltip>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleShareClose}
+          >
+            <CopyToClipboard text={getJokeUrl(joke)}>
+              <MenuItem onClick={handleShareLink}>
+                <ListItemIcon>
+                  <LinkIcon fontSize="small" />
+                </ListItemIcon>
+                Copy Link
+              </MenuItem>
+            </CopyToClipboard>
+            <CopyToClipboard text={`${joke.setup}\n${joke.delivery}`}>
+              <MenuItem onClick={handleShareJoke}>
+                <ListItemIcon>
+                  <FileCopyIcon fontSize="small" />
+                </ListItemIcon>
+                Copy Joke
+              </MenuItem>
+            </CopyToClipboard>
+          </Menu>
         </CardActions>
       </div>
       <Snackbar
@@ -99,8 +164,16 @@ function SingleJoke({ joke }) {
         onClose={handleClose}
         message={
           <div className={classes.SnackbarMessage}>
-            <FavoriteIcon color="secondary" />
-            <div className={classes.SnackbarText}>Added to favorites</div>
+            {(() => {
+              if (snackbarText === "Added to favorites") {
+                return <FavoriteIcon color="secondary" />;
+              } else if (snackbarText === "Link Copied") {
+                return <LinkIcon />;
+              } else {
+                return <FileCopyIcon />;
+              }
+            })()}
+            <div className={classes.SnackbarText}>{snackbarText}</div>
           </div>
         }
         action={

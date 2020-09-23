@@ -16,17 +16,32 @@ function JokeList() {
   console.log("FavoriteJokeList");
   return (
     <div className={classes.root}>
-      <Grid container spacing={3}>
-        {favoriteJokes.map((joke) => (
-          <Grid key={joke.id} item sm={12} md={6} className={classes.gridItem}>
-            {joke.type === "single" ? (
-              <SingleJoke joke={joke} />
-            ) : (
-              <TwoPartJoke joke={joke} />
-            )}
-          </Grid>
-        ))}
-      </Grid>
+      {favoriteJokes.length === 0 ? (
+        <h2>
+          No jokes added to favorites{" "}
+          <span role="img" aria-label="heart broken">
+            💔
+          </span>
+        </h2>
+      ) : (
+        <Grid container spacing={3}>
+          {favoriteJokes.map((joke) => (
+            <Grid
+              key={joke.id}
+              item
+              sm={12}
+              md={6}
+              className={classes.gridItem}
+            >
+              {joke.type === "single" ? (
+                <SingleJoke joke={joke} />
+              ) : (
+                <TwoPartJoke joke={joke} />
+              )}
+            </Grid>
+          ))}
+        </Grid>
+      )}
     </div>
   );
 }
