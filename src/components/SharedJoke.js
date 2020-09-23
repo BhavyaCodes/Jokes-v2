@@ -9,7 +9,6 @@ import useStyles from "../styles/SharedJokeStyles";
 function SharedJoke(props) {
   const classes = useStyles();
   const { jokeId } = props.match.params;
-  console.log(jokeId);
 
   const [joke, setJoke] = useState({});
   const [isLoading, setIsLoading] = useState(true);
@@ -18,28 +17,25 @@ function SharedJoke(props) {
   useEffect(() => {
     const getJoke = async () => {
       const joke = await jokeApi.get(`/Any?idRange=${jokeId}`);
-      setJoke(joke.data);
-      // console.log(joke);
-      setIsLoading(false);
       setError(joke.data.error);
-      // console.log(error);
+      setJoke(joke.data);
+      setIsLoading(false);
     };
     getJoke();
   }, [jokeId]);
-  console.log("joke", joke);
-  console.log("isLoading", isLoading);
 
-  const renderJoke = () => {
-    return joke.type === "single" ? (
-      <SingleJoke joke={joke} />
-    ) : (
-      <TwoPartJoke joke={joke} />
-    );
-  };
   return (
     <div className={classes.root}>
       <div className={classes.jokeContainer}>
-        {isLoading ? <LoadingJoke /> : renderJoke()}
+        {error ? (
+          <h2>{"404 - Joke not found :("}</h2>
+        ) : isLoading ? (
+          <LoadingJoke />
+        ) : joke.type === "single" ? (
+          <SingleJoke joke={joke} />
+        ) : (
+          <TwoPartJoke joke={joke} />
+        )}
       </div>
     </div>
   );
