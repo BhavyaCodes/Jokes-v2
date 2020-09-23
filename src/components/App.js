@@ -6,6 +6,7 @@ import { FiltersProvider } from "../contexts/filters.context";
 import Navbar from "./Navbar";
 import FavoriteJokeList from "./FavoriteJokeList";
 import JokeList from "./JokeList";
+import SharedJoke from "./SharedJoke";
 import Footer from "./Footer";
 import ScrollToTop from "./ScrollToTop";
 
@@ -45,6 +46,22 @@ function App() {
                     <main className={classes.content}>
                       <div className={classes.toolbar} />
                       <FavoriteJokeList />
+                    </main>
+                    <Footer />
+                  </div>
+                </>
+              )}
+            />
+            <Route
+              path="/joke/:jokeId"
+              exact
+              render={(routeProps) => (
+                <>
+                  <Navbar {...routeProps} />
+                  <div className={classes.contentWrapper}>
+                    <main className={classes.content}>
+                      <div className={classes.toolbar} />
+                      <SharedJoke {...routeProps} />
                     </main>
                     <Footer />
                   </div>

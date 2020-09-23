@@ -41,7 +41,7 @@ export default makeStyles((theme) => ({
   },
   logo: {
     height: "48px",
-    [theme.breakpoints.down("sm")]: {
+    [theme.breakpoints.down("xs")]: {
       height: "36px",
     },
   },
