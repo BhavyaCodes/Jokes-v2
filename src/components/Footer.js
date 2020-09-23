@@ -28,7 +28,7 @@ function Footer() {
         </Tooltip>
         <Tooltip title="Twitter">
           <a
-            href="https://twitter.com/BhavyaTomar7"
+            href="https://twitter.com/BhavyaCodes"
             target="_blank"
             rel="noreferrer noopener"
           >
