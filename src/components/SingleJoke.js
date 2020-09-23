@@ -1,4 +1,4 @@
-import React, { useContext, memo, useState } from "react";
+import React, { useContext, memo, useState, useEffect } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import Card from "@material-ui/core/Card";
@@ -37,14 +37,18 @@ function SingleJoke({ joke }) {
   };
 
   const handleShareLink = () => {
-    setSnackbarText("Link Copied");
-    setOpenSnackbar(true);
+    setSnackPack((prev) => [
+      ...prev,
+      { message: "Link Copied", key: new Date().getTime() },
+    ]);
     setAnchorEl(null);
   };
 
   const handleShareJoke = () => {
-    setSnackbarText("Joke Copied");
-    setOpenSnackbar(true);
+    setSnackPack((prev) => [
+      ...prev,
+      { message: "Joke Copied", key: new Date().getTime() },
+    ]);
     setAnchorEl(null);
   };
 
@@ -57,13 +61,30 @@ function SingleJoke({ joke }) {
     return `${baseUrl}/joke/${joke.id}`;
   };
 
+  const [snackPack, setSnackPack] = React.useState([]);
   const [openSnackbar, setOpenSnackbar] = React.useState(false);
-  const [snackbarText, setSnackbarText] = useState("abcd");
+  const [snackbarInfo, setSnackbarInfo] = useState(undefined);
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
     }
     setOpenSnackbar(false);
+  };
+
+  useEffect(() => {
+    if (snackPack.length && !snackbarInfo) {
+      // Set a new snack when we don't have an active one
+      setSnackbarInfo({ ...snackPack[0] });
+      setSnackPack((prev) => prev.slice(1));
+      setOpenSnackbar(true);
+    } else if (snackPack.length && snackbarInfo && openSnackbar) {
+      // Close an active snack when a new one is added
+      setOpenSnackbar(false);
+    }
+  }, [snackPack, snackbarInfo, openSnackbar]);
+
+  const handleExited = () => {
+    setSnackbarInfo(undefined);
   };
 
   const classes = useStyles();
@@ -76,8 +97,10 @@ function SingleJoke({ joke }) {
 
   const handleChange = (e) => {
     if (e.target.checked) {
-      setSnackbarText("Added to favorites");
-      setOpenSnackbar(true);
+      setSnackPack((prev) => [
+        ...prev,
+        { message: "Added to favorites", key: new Date().getTime() },
+      ]);
       dispatchJoke({ type: "ADD_JOKE", joke });
       dispatchId({ type: "ADD_ID", jokeId: joke.id });
     }
@@ -158,19 +181,23 @@ function SingleJoke({ joke }) {
         open={openSnackbar}
         autoHideDuration={6000}
         onClose={handleClose}
+        key={snackbarInfo ? snackbarInfo.key : undefined}
+        onExited={handleExited}
         message={
-          <div className={classes.SnackbarMessage}>
-            {(() => {
-              if (snackbarText === "Added to favorites") {
-                return <FavoriteIcon color="secondary" />;
-              } else if (snackbarText === "Link Copied") {
-                return <LinkIcon />;
-              } else {
-                return <FileCopyIcon />;
-              }
-            })()}
-            <div className={classes.SnackbarText}>{snackbarText}</div>
-          </div>
+          snackbarInfo ? (
+            <div className={classes.SnackbarMessage}>
+              {(() => {
+                if (snackbarInfo.message === "Added to favorites") {
+                  return <FavoriteIcon color="secondary" />;
+                } else if (snackbarInfo.message === "Link Copied") {
+                  return <LinkIcon />;
+                } else {
+                  return <FileCopyIcon />;
+                }
+              })()}
+              <div className={classes.SnackbarText}>{snackbarInfo.message}</div>
+            </div>
+          ) : undefined
         }
         action={
           <React.Fragment>

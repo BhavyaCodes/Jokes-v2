@@ -11,7 +11,7 @@
 - [ ] remove console.logs
 - [ ] fix keyboard not closing after searching
 - [x] fix overlapping refresh button
-- [ ] fix snackbar bug with multiple actions
+- [x] fix snackbar bug with multiple actions
 
 ### Issues -
 
