@@ -258,7 +258,7 @@ function Drawer({ handleDrawerClose, disabledDrawer }) {
           onClick={handleResetFilters}
           disabled={disabledDrawer}
         >
-          Reset filters
+          Clear All filters
         </Button>
       </div>
     </div>

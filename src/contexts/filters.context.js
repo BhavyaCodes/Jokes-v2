@@ -15,11 +15,11 @@ export function FiltersProvider(props) {
       pun: false,
     },
     blacklist: {
-      nsfw: false,
-      religious: false,
-      political: false,
-      racist: false,
-      sexist: false,
+      nsfw: true,
+      religious: true,
+      political: true,
+      racist: true,
+      sexist: true,
     },
   });
 
